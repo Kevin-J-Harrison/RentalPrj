@@ -74,10 +74,10 @@ public class RentDVDDialog extends JDialog {
 	
 	public void actionPerformedEvent(ActionEvent e) {
 		if (e.getSource() == OK) {
-//			unit.setName(nameF.toString());
-//			unit.setTitle(titleF.toString());
-//			unit.setRentDate(rentDateF.toString());
-//			unit.setDueDate(dueDateF.toString());
+			unit.setNameOfRenter(nameF.toString());
+			unit.setTitle(titleF.toString());
+			unit.setRentalDate();
+			unit.setDueBack();
 	}
 	
 }
