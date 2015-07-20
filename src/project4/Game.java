@@ -1,5 +1,6 @@
 package project4;
 
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Game extends DVD {
@@ -23,16 +24,16 @@ public class Game extends DVD {
 		return bought;
 	}
 
-	public void setRentalDate(GregorianCalendar bought) {
-		this.bought = bought;
+	public void setRentalDate(Date bought) {
+		this.bought.setTime(bought);
 	}
 
 	public GregorianCalendar getDueBack() {
 		return dueBack;
 	}
 
-	public void setDueBack(GregorianCalendar dueBack) {
-		this.dueBack = dueBack;
+	public void setDueBack(Date dueBack) {
+		this.dueBack.setTime(dueBack);
 	}
 
 	public String getNameOfRenter() {
