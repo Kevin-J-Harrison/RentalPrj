@@ -9,6 +9,8 @@ import java.util.GregorianCalendar;
 
 import javax.swing.*;
 
+import project4.PlayerType;
+
 public class RentGameDialog extends JDialog {
 	private JLabel nameL;
 	private JTextField nameF;
@@ -27,7 +29,7 @@ public class RentGameDialog extends JDialog {
 
 	private JLabel consoleL;
 	private JTextField consoleF;
-	// private PlayerType[] consoles;
+	private PlayerType[] consoles;
 
 	private JButton OK;
 	private JButton cancel;
@@ -39,7 +41,7 @@ public class RentGameDialog extends JDialog {
 	public RentGameDialog(JFrame parent, Game g) {
 		super(parent);
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(5, 2));
+		panel.setLayout(new GridLayout(6, 2));
 		panel.setVisible(true);
 		this.setModal(true);
 
@@ -72,7 +74,10 @@ public class RentGameDialog extends JDialog {
 		
 
 		consoleL = new JLabel("Console Type:");
-		consoleL.add(this);
+		//consoleL.add(this);
+		panel.add(consoleL);
+		consoleF = new JTextField("GameCube");
+		panel.add(consoleF);
 		// will need something for this grid slot once we know what is going on with the
 		// PlayerType[] thing
 
@@ -93,7 +98,8 @@ public class RentGameDialog extends JDialog {
 			try {
 				unit.setRentalDate(fmt.parse(rentDateF.toString()));
 				unit.setDueBack(fmt.parse(dueDateF.toString()));
-				// unit.setConsole(consoleF.toString());
+				PlayerType p = PlayerType.valueOf(consoleF.toString());
+				unit.setConsole(p);
 			} catch (Exception ec) {
 
 			}
