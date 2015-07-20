@@ -35,43 +35,40 @@ public class RentDVDDialog extends JDialog {
 	private DVD unit;
 
 	public RentDVDDialog(JFrame parent, DVD d) {
-		
-	    	JPanel panel = new JPanel();
-	    	panel.setLayout(new GridLayout(5, 2));
+		this.setLayout(new GridLayout(5, 2));
 
 		unit = d;
-		
 
 		nameL = new JLabel("Your Name:");
-		panel.add(nameL);
+		nameL.add(this);
 		nameF = new JTextField("Max Mustermann");
-		panel.add(nameF);
+		nameF.add(this);
 
 		titleL = new JLabel("Title of Movie:");
-		panel.add(titleL);
+		titleL.add(this);
 		titleF = new JTextField("Run Lola Run");
-		panel.add(titleF);
+		titleF.add(this);
 
 		Date date = calendar.getTime();
 		rentDateL = new JLabel("Rented on Date:");
-		panel.add(rentDateL);
+		rentDateL.add(this);
 		rentDateF = new JTextField(fmt.format(date));
-		panel.add(rentDateF);
+		rentDateF.add(this);
 
 		// creates a suggested due date of 1 week
 		calendar.add(calendar.DAY_OF_MONTH, 7);
 		Date dueDay = calendar.getTime();
 
 		dueDateL = new JLabel("Due Back:");
-		panel.add(dueDateL);
+		dueDateL.add(this);
 		dueDateF = new JTextField(fmt.format(dueDay));
-		panel.add(dueDateF);
+		dueDateF.add(this);
 
 		OK = new JButton("OK");
-		panel.add(OK);
+		OK.add(this);
 
 		cancel = new JButton("Cancel");
-		panel.add(cancel);
+		cancel.add(this);
 
 	}
 
@@ -86,6 +83,7 @@ public class RentDVDDialog extends JDialog {
 			} catch (Exception ex) {
 
 			}
+		returnDVD();
 		}
 	}
 }
