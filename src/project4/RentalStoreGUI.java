@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import project4.RentDVDDialog;
+import project4.RentGameDialog;
 
 public class RentalStoreGUI extends JFrame implements ActionListener {
 
@@ -28,7 +30,10 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		this.setJMenuBar(menuBar());
 		panel.add(list);
 		this.pack();
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+		this.setSize(800, 400);
+		this.setResizable(true);
 		
 	
 	}
@@ -45,6 +50,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		save = new JMenuItem("Save Serial...");
 		save.addActionListener(null); //FIX
 		file.add(save);
+		file.addSeparator();
 		exit = new JMenuItem("Exit");
 		exit.addActionListener(null); //FIX
 		file.add(exit);
@@ -58,6 +64,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		rentGame = new JMenuItem("Rent Game");
 		rentGame.addActionListener(null); //FIX
 		action.add(rentGame);
+		action.addSeparator();
 		Return = new JMenuItem("Return");
 		Return.addActionListener(null); //FIX
 		action.add(Return);
@@ -68,6 +75,12 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+	   JComponent comp = (JComponent)e.getSource();
+	   
+	   if(comp == rentDVD) {
+	       DVD unit = new DVD();
+	       RentDVDDialog rent = new RentDVDDialog(this, unit);
+	   }
 
 	}
 	

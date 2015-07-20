@@ -16,12 +16,9 @@ public class RentalStore extends AbstractListModel{
 		listDVDs = new ArrayList<DVD>();
 	}
 
-	
-	
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return listDVDs.size();
 	}
 
 	@Override
@@ -31,9 +28,8 @@ public class RentalStore extends AbstractListModel{
 	}
 	
 	//TO-DO
-	public void addDVD() {
-		//TO-DO
-	    
+	public void addDVD(DVD unit) {
+	   
 	    
 	   fireIntervalAdded();
 	}
