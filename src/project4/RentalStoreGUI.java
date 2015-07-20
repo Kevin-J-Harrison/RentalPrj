@@ -45,28 +45,28 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		menu.add(file);
 		
 		open = new JMenuItem("Open Serial...");
-		open.addActionListener(null); //FIX
+		open.addActionListener(this); 
 		file.add(open);
 		save = new JMenuItem("Save Serial...");
-		save.addActionListener(null); //FIX
+		save.addActionListener(this); 
 		file.add(save);
 		file.addSeparator();
 		exit = new JMenuItem("Exit");
-		exit.addActionListener(null); //FIX
+		exit.addActionListener(this);
 		file.add(exit);
 		
 		action = new JMenu("Action");
 		menu.add(action);
 		
 		rentDVD = new JMenuItem("Rent DVD");
-		rentDVD.addActionListener(null); //FIX
+		rentDVD.addActionListener(this);
 		action.add(rentDVD);
 		rentGame = new JMenuItem("Rent Game");
-		rentGame.addActionListener(null); //FIX
+		rentGame.addActionListener(this);
 		action.add(rentGame);
 		action.addSeparator();
 		Return = new JMenuItem("Return");
-		Return.addActionListener(null); //FIX
+		Return.addActionListener(this);
 		action.add(Return);
 		
 		return menu;
@@ -78,8 +78,11 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	   JComponent comp = (JComponent)e.getSource();
 	   
 	   if(comp == rentDVD) {
+	       //System.out.print("yeah, the button works");
 	       DVD unit = new DVD();
-	       RentDVDDialog rent = new RentDVDDialog(this, unit);
+	       JDialog rent = new RentDVDDialog(new JFrame(), unit);
+	       rent.setVisible(true);
+	       rent.setModal(true);
 	   }
 
 	}

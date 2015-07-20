@@ -35,6 +35,7 @@ public class RentDVDDialog extends JDialog {
 	private DVD unit;
 
 	public RentDVDDialog(JFrame parent, DVD d) {
+	    	super(parent);
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(5, 2));
 		panel.setVisible(true);
@@ -72,6 +73,8 @@ public class RentDVDDialog extends JDialog {
 
 		cancel = new JButton("Cancel");
 		panel.add(cancel);
+		
+		getContentPane().add(panel);
 
 	}
 
@@ -86,7 +89,7 @@ public class RentDVDDialog extends JDialog {
 			} catch (Exception ex) {
 
 			}
-		returnDVD();
+		//returnDVD();
 		}
 	}
 }

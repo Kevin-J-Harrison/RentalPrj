@@ -31,21 +31,21 @@ public class RentalStore extends AbstractListModel{
 	public void addDVD(DVD unit) {
 	   
 	    
-	   fireIntervalAdded();
+	   //fireIntervalAdded();
 	}
 	
 	//TO-DO
 	public void deleteDVD(){
 		//TO-DO
 	    
-	    fireIntevalRemoved();
+	    //fireIntevalRemoved();
 	}
 	
 	//TO-DO
 	public void updateDVDs(){
 		//TO-DO
 	    
-	    fireContentsChanged();
+	    //fireContentsChanged(null,null,null);
 	}
 	
 	public void save(String filename) throws IOException {
