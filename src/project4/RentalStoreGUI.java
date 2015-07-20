@@ -87,5 +87,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	public static void main(String [] args) {
 	    RentalStoreGUI gui = new RentalStoreGUI();
 	}
+	
+	
 
 }
