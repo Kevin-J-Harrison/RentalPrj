@@ -37,43 +37,53 @@ public class RentGameDialog extends JDialog {
 	private Game unit;
 
 	public RentGameDialog(JFrame parent, Game g) {
-		this.setLayout(new GridLayout(6, 2));
+		super(parent);
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(5, 2));
+		panel.setVisible(true);
+		this.setModal(true);
 
 		unit = g;
 
 		nameL = new JLabel("Your Name:");
-		nameL.add(this);
+		panel.add(nameL);
 		nameF = new JTextField("Max Mustermann");
-		nameF.add(this);
+		panel.add(nameF);
 
-		titleL = new JLabel("Title of Game:");
-		titleL.add(this);
-		titleF = new JTextField("Space Invaders");
-		titleF.add(this);
+		titleL = new JLabel("Title of Movie:");
+		panel.add(titleL);
+		titleF = new JTextField("Run Lola Run");
+		panel.add(titleF);
 
 		Date date = calendar.getTime();
 		rentDateL = new JLabel("Rented on Date:");
-		rentDateL.add(this);
+		panel.add(rentDateL);
 		rentDateF = new JTextField(fmt.format(date));
-		rentDateF.add(this);
+		panel.add(rentDateF);
 
 		// creates a suggested due date of 1 week
 		calendar.add(calendar.DAY_OF_MONTH, 7);
 		Date dueDay = calendar.getTime();
 
 		dueDateL = new JLabel("Due Back:");
-		dueDateL.add(this);
+		panel.add(dueDateL);
 		dueDateF = new JTextField(fmt.format(dueDay));
-		dueDateF.add(this);
+		panel.add(dueDateF);
+		
 
 		consoleL = new JLabel("Console Type:");
 		consoleL.add(this);
+		// will need something for this grid slot once we know what is going on with the
+		// PlayerType[] thing
 
 		OK = new JButton("OK");
-		OK.add(this);
+		panel.add(OK);
 
 		cancel = new JButton("Cancel");
-		cancel.add(this);
+		panel.add(cancel);
+
+		getContentPane().add(panel);
+
 	}
 
 	public void actionedPerformedEvent(ActionEvent e) {

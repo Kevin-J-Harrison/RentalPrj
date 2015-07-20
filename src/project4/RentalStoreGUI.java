@@ -10,23 +10,23 @@ import project4.RentGameDialog;
 public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	private JMenuBar menu;
-	
+
 	private JMenu file;
 	private JMenuItem open, save, exit;
-	
+
 	private JMenu action;
 	private JMenuItem rentDVD, rentGame, Return;
-	
+
 	private JList list;
-	
+
 	public RentalStoreGUI() {
-	    
-	    	JPanel panel = new JPanel();
-	    	this.add(panel);
+
+		JPanel panel = new JPanel();
+		this.add(panel);
 		list = new JList();
-		
-		//menuBar();
-		
+
+		// menuBar();
+
 		this.setJMenuBar(menuBar());
 		panel.add(list);
 		this.pack();
@@ -34,30 +34,29 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		this.setVisible(true);
 		this.setSize(800, 400);
 		this.setResizable(true);
-		
-	
+
 	}
-	
+
 	public JMenuBar menuBar() {
 		menu = new JMenuBar();
-		
+
 		file = new JMenu("File");
 		menu.add(file);
-		
+
 		open = new JMenuItem("Open Serial...");
-		open.addActionListener(this); 
+		open.addActionListener(this);
 		file.add(open);
 		save = new JMenuItem("Save Serial...");
-		save.addActionListener(this); 
+		save.addActionListener(this);
 		file.add(save);
 		file.addSeparator();
 		exit = new JMenuItem("Exit");
 		exit.addActionListener(this);
 		file.add(exit);
-		
+
 		action = new JMenu("Action");
 		menu.add(action);
-		
+
 		rentDVD = new JMenuItem("Rent DVD");
 		rentDVD.addActionListener(this);
 		action.add(rentDVD);
@@ -68,29 +67,34 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		Return = new JMenuItem("Return");
 		Return.addActionListener(this);
 		action.add(Return);
-		
+
 		return menu;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-	   JComponent comp = (JComponent)e.getSource();
-	   
-	   if(comp == rentDVD) {
-	       //System.out.print("yeah, the button works");
-	       DVD unit = new DVD();
-	       JDialog rent = new RentDVDDialog(new JFrame(), unit);
-	       rent.setVisible(true);
-	       rent.setModal(true);
-	   }
+		JComponent comp = (JComponent) e.getSource();
+
+		if (comp == rentDVD) {
+			// System.out.print("yeah, the button works");
+			DVD unit = new DVD();
+			JDialog rent = new RentDVDDialog(new JFrame(), unit);
+			rent.setVisible(true);
+			rent.setModal(true);
+		}
+
+		if (comp == rentGame) {
+			Game unit = new Game();
+			JDialog rent = new RentGameDialog(new JFrame(), unit);
+			rent.setVisible(true);
+			rent.setModal(true);
+		}
 
 	}
-	
-	public static void main(String [] args) {
-	    RentalStoreGUI gui = new RentalStoreGUI();
+
+	public static void main(String[] args) {
+		RentalStoreGUI gui = new RentalStoreGUI();
 	}
-	
-	
 
 }
