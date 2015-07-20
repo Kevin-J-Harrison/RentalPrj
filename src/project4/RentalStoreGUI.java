@@ -18,9 +18,19 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	private JList list;
 	
 	public RentalStoreGUI() {
+	    
+	    	JPanel panel = new JPanel();
+	    	this.add(panel);
 		list = new JList();
 		
-		menuBar();
+		//menuBar();
+		
+		this.setJMenuBar(menuBar());
+		panel.add(list);
+		this.pack();
+		this.setVisible(true);
+		
+	
 	}
 	
 	public JMenuBar menuBar() {
@@ -29,10 +39,10 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		file = new JMenu("File");
 		menu.add(file);
 		
-		open = new JMenuItem("Open");
+		open = new JMenuItem("Open Serial...");
 		open.addActionListener(null); //FIX
 		file.add(open);
-		save = new JMenuItem("Save");
+		save = new JMenuItem("Save Serial...");
 		save.addActionListener(null); //FIX
 		file.add(save);
 		exit = new JMenuItem("Exit");
@@ -59,6 +69,10 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public static void main(String [] args) {
+	    RentalStoreGUI gui = new RentalStoreGUI();
 	}
 
 }

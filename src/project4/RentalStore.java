@@ -31,18 +31,25 @@ public class RentalStore extends AbstractListModel{
 	}
 	
 	//TO-DO
-	public void add() {
+	public void addDVD() {
 		//TO-DO
+	    
+	    
+	   fireIntervalAdded();
 	}
 	
 	//TO-DO
-	public void delete(){
+	public void deleteDVD(){
 		//TO-DO
+	    
+	    fireIntevalRemoved();
 	}
 	
 	//TO-DO
-	public void update(){
+	public void updateDVDs(){
 		//TO-DO
+	    
+	    fireContentsChanged();
 	}
 	
 	public void save(String filename) throws IOException {
@@ -57,6 +64,10 @@ public class RentalStore extends AbstractListModel{
 		ObjectInputStream is = new ObjectInputStream(fis);
 		listDVDs = (ArrayList<DVD>) is.readObject();
 		is.close();
+	}
+	
+	public void fireIntervalAdded() {
+	    
 	}
 
 }
