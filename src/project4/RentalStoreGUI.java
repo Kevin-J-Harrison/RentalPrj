@@ -80,15 +80,22 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 			// System.out.print("yeah, the button works");
 			DVD unit = new DVD();
 			JDialog rent = new RentDVDDialog(new JFrame(), unit);
-			rent.setVisible(true);
 			rent.setModal(true);
+			rent.setSize(250, 200);
+			rent.setLocationRelativeTo(this);
+			rent.setVisible(true);
+			rent.setResizable(true);
+			
 		}
 
 		if (comp == rentGame) {
 			Game unit = new Game();
 			JDialog rent = new RentGameDialog(new JFrame(), unit);
-			rent.setVisible(true);
 			rent.setModal(true);
+			rent.setSize(300, 250);
+			rent.setLocationRelativeTo(this);
+			rent.setVisible(true);
+			rent.setResizable(true);
 		}
 
 	}
