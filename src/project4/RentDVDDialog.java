@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class RentDVDDialog extends JDialog {
+public class RentDVDDialog extends JDialog implements ActionListener{
 
 	private JLabel nameL;
 	private JTextField nameF;
@@ -35,12 +35,10 @@ public class RentDVDDialog extends JDialog {
 	private DVD unit;
 
 	public RentDVDDialog(JFrame parent, DVD d) {
-		super(parent);
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(5, 2));
 		panel.setVisible(true);
-		this.setModal(true);
-
+		
 		unit = d;
 
 		nameL = new JLabel("Your Name:");
@@ -69,16 +67,27 @@ public class RentDVDDialog extends JDialog {
 		panel.add(dueDateF);
 
 		OK = new JButton("OK");
+		OK.addActionListener(this);
 		panel.add(OK);
 
 		cancel = new JButton("Cancel");
+		cancel.addActionListener(this);
 		panel.add(cancel);
 
 		getContentPane().add(panel);
 
 	}
-
-	public void actionPerformedEvent(ActionEvent e) {
+	
+	public void setFrame() {
+	    setModal(true);
+	    setSize(300, 250);
+	    setLocationRelativeTo(this);
+	    setVisible(true);
+	    setResizable(true);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == OK) {
 			unit.setNameOfRenter(nameF.toString());
 			unit.setTitle(titleF.toString());
@@ -89,7 +98,12 @@ public class RentDVDDialog extends JDialog {
 			} catch (Exception ex) {
 
 			}
-			// returnDVD();
+			dispose();
+
+		}
+		
+		if(e.getSource() == cancel) {
+		    	dispose();
 		}
 	}
 }

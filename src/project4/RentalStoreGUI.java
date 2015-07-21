@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import project4.RentDVDDialog;
 import project4.RentGameDialog;
+import project4.RentalStore;
 
 public class RentalStoreGUI extends JFrame implements ActionListener {
 
@@ -18,14 +19,16 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	private JMenuItem rentDVD, rentGame, Return;
 
 	private JList list;
+	
+	private RentalStore store;
 
 	public RentalStoreGUI() {
+	    
+	    	store = new RentalStore();
 
 		JPanel panel = new JPanel();
 		this.add(panel);
 		list = new JList();
-
-		// menuBar();
 
 		this.setJMenuBar(menuBar());
 		panel.add(list);
@@ -79,23 +82,17 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		if (comp == rentDVD) {
 			// System.out.print("yeah, the button works");
 			DVD unit = new DVD();
-			JDialog rent = new RentDVDDialog(new JFrame(), unit);
-			rent.setModal(true);
-			rent.setSize(250, 200);
-			rent.setLocationRelativeTo(this);
-			rent.setVisible(true);
-			rent.setResizable(true);
+			RentDVDDialog rent = new RentDVDDialog(new JFrame(), unit);
+			rent.setFrame();
+			store.addDVD(unit);
 			
 		}
 
 		if (comp == rentGame) {
 			Game unit = new Game();
-			JDialog rent = new RentGameDialog(new JFrame(), unit);
-			rent.setModal(true);
-			rent.setSize(300, 250);
-			rent.setLocationRelativeTo(this);
-			rent.setVisible(true);
-			rent.setResizable(true);
+			RentGameDialog rent = new RentGameDialog(new JFrame(), unit);
+			rent.setFrame();
+			store.addDVD(unit);
 		}
 
 	}

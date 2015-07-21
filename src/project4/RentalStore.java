@@ -29,7 +29,7 @@ public class RentalStore extends AbstractListModel{
 	
 	//TO-DO
 	public void addDVD(DVD unit) {
-	   
+	    	listDVDs.add(unit);
 	    
 	   //fireIntervalAdded();
 	}
@@ -60,10 +60,6 @@ public class RentalStore extends AbstractListModel{
 		ObjectInputStream is = new ObjectInputStream(fis);
 		listDVDs = (ArrayList<DVD>) is.readObject();
 		is.close();
-	}
-	
-	public void fireIntervalAdded() {
-	    
 	}
 
 }

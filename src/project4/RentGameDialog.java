@@ -11,7 +11,7 @@ import javax.swing.*;
 
 import project4.PlayerType;
 
-public class RentGameDialog extends JDialog {
+public class RentGameDialog extends JDialog implements ActionListener {
 	private JLabel nameL;
 	private JTextField nameF;
 
@@ -39,11 +39,9 @@ public class RentGameDialog extends JDialog {
 	private Game unit;
 
 	public RentGameDialog(JFrame parent, Game g) {
-		super(parent);
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(6, 2));
 		panel.setVisible(true);
-		this.setModal(true);
 
 		unit = g;
 
@@ -74,35 +72,48 @@ public class RentGameDialog extends JDialog {
 		
 
 		consoleL = new JLabel("Console Type:");
-		//consoleL.add(this);
 		panel.add(consoleL);
 		consoleF = new JTextField("GameCube");
 		panel.add(consoleF);
-		// will need something for this grid slot once we know what is going on with the
-		// PlayerType[] thing
 
 		OK = new JButton("OK");
+		OK.addActionListener(this);
 		panel.add(OK);
 
 		cancel = new JButton("Cancel");
+		cancel.addActionListener(this);
 		panel.add(cancel);
 
 		getContentPane().add(panel);
 
 	}
-
-	public void actionedPerformedEvent(ActionEvent e) {
+	
+	public void setFrame() {
+	    setModal(true);
+	    setSize(300, 250);
+	    setLocationRelativeTo(this);
+	    setVisible(true);
+	    setResizable(true);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == OK) {
-			unit.setNameOfRenter(nameF.toString());
+		    	unit.setNameOfRenter(nameF.toString());
 			unit.setTitle(titleF.toString());
 			try {
 				unit.setRentalDate(fmt.parse(rentDateF.toString()));
 				unit.setDueBack(fmt.parse(dueDateF.toString()));
 				PlayerType p = PlayerType.valueOf(consoleF.toString());
 				unit.setConsole(p);
-			} catch (Exception ec) {
+			} catch (Exception ex) {
 
 			}
+			dispose();
+		}
+		
+		if(e.getSource() == cancel) {
+		    	dispose();
 		}
 	}
 
