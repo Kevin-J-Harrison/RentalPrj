@@ -1,9 +1,11 @@
 package project4;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
 import project4.RentDVDDialog;
 import project4.RentGameDialog;
 import project4.RentalStore;
@@ -17,26 +19,20 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	private JMenu action;
 	private JMenuItem rentDVD, rentGame, Return;
+	
+	private JScrollPane scrollPane;
 
-	private JList list;
+	private JList<DVD> list;
+	private DVD d;
 	
 	private RentalStore store;
 
 	public RentalStoreGUI() {
 	    
-	    	store = new RentalStore();
-
-		JPanel panel = new JPanel();
-		this.add(panel);
-		list = new JList();
-
-		this.setJMenuBar(menuBar());
-		panel.add(list);
-		this.pack();
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
-		this.setSize(800, 400);
-		this.setResizable(true);
+		setFrame();
+	    store = new RentalStore();
+		list.setModel(store);
+		d = new DVD();
 
 	}
 
@@ -73,7 +69,36 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 		return menu;
 	}
+	
+	private void setFrame() {
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        this.setTitle("Electric Boogaloo DVD & Game Rental");
+        
+        scrollPane = new JScrollPane();
+        list = new JList<DVD>();
 
+        scrollPane.setVerticalScrollBarPolicy(
+                        ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        list.setBorder(javax.swing.BorderFactory.createTitledBorder("List Of Rentals"));
+        list.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        list.setToolTipText("Select a rental to return");
+        list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                selectMouseClicked(e);
+            }
+        });
+        scrollPane.setViewportView(list);
+
+        this.add(scrollPane, BorderLayout.CENTER);
+
+        this.setJMenuBar(menuBar());
+		this.pack();
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+		this.setSize(800, 400);
+		this.setResizable(true);
+    }
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -95,6 +120,14 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 			store.addDVD(unit);
 		}
 
+	}
+	
+	private void selectMouseClicked(java.awt.event.MouseEvent e) {
+		int index = list.getSelectedIndex();
+		
+		if(index != -1) {
+			DVD d = store.getElementAt(index);
+		}
 	}
 
 	public static void main(String[] args) {

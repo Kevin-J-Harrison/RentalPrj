@@ -11,6 +11,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class RentDVDDialog extends JDialog implements ActionListener{
+	
+	private static final long serialVersionUID = 1L;
 
 	private JLabel nameL;
 	private JTextField nameF;
