@@ -106,7 +106,8 @@ public class RentGameDialog extends JDialog implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == OK) {
+	    JComponent comp = (JComponent)e.getSource();
+		if (comp == OK) {
 		    	unit.setNameOfRenter(nameF.toString());
 			unit.setTitle(titleF.toString());
 			try {
@@ -120,7 +121,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 			dispose();
 		}
 		
-		if(e.getSource() == cancel) {
+		if(comp == cancel) {
 		    	dispose();
 		}
 	}

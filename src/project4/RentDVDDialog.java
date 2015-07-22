@@ -90,7 +90,8 @@ public class RentDVDDialog extends JDialog implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == OK) {
+	    JComponent comp = (JComponent)e.getSource();
+		if (comp == OK) {
 			unit.setNameOfRenter(nameF.toString());
 			unit.setTitle(titleF.toString());
 			try {
@@ -104,7 +105,7 @@ public class RentDVDDialog extends JDialog implements ActionListener{
 
 		}
 		
-		if(e.getSource() == cancel) {
+		if(comp == cancel) {
 		    	dispose();
 		}
 	}

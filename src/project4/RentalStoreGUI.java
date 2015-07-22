@@ -1,6 +1,7 @@
 package project4;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,9 +19,12 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	private JMenuItem open, save, exit;
 
 	private JMenu action;
-	private JMenuItem rentDVD, rentGame, Return;
+	private JMenuItem rentDVDI, rentGameI, returnI;
 	
 	private JScrollPane scrollPane;
+	
+	private JPanel	buttonPanel;
+	private JButton	rentDVDB, rentGameB, returnB;
 
 	private JList<DVD> list;
 	private DVD d;
@@ -30,7 +34,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	public RentalStoreGUI() {
 	    
 		setFrame();
-	    store = new RentalStore();
+		store = new RentalStore();
 		list.setModel(store);
 		d = new DVD();
 
@@ -56,55 +60,72 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		action = new JMenu("Action");
 		menu.add(action);
 
-		rentDVD = new JMenuItem("Rent DVD");
-		rentDVD.addActionListener(this);
-		action.add(rentDVD);
-		rentGame = new JMenuItem("Rent Game");
-		rentGame.addActionListener(this);
-		action.add(rentGame);
+		rentDVDI = new JMenuItem("Rent DVD");
+		rentDVDI.addActionListener(this);
+		action.add(rentDVDI);
+		rentGameI = new JMenuItem("Rent Game");
+		rentGameI.addActionListener(this);
+		action.add(rentGameI);
 		action.addSeparator();
-		Return = new JMenuItem("Return");
-		Return.addActionListener(this);
-		action.add(Return);
+		returnI = new JMenuItem("Return");
+		returnI.addActionListener(this);
+		action.add(returnI);
 
 		return menu;
 	}
 	
 	private void setFrame() {
-        this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        this.setTitle("Electric Boogaloo DVD & Game Rental");
+	    this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+	    this.setTitle("Electric Boogaloo DVD & Game Rental");
         
-        scrollPane = new JScrollPane();
-        list = new JList<DVD>();
-
-        scrollPane.setVerticalScrollBarPolicy(
-                        ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-        list.setBorder(javax.swing.BorderFactory.createTitledBorder("List Of Rentals"));
-        list.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        list.setToolTipText("Select a rental to return");
-        list.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                selectMouseClicked(e);
-            }
-        });
-        scrollPane.setViewportView(list);
-
-        this.add(scrollPane, BorderLayout.CENTER);
-
-        this.setJMenuBar(menuBar());
-		this.pack();
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
-		this.setSize(800, 400);
-		this.setResizable(true);
-    }
+            scrollPane = new JScrollPane();
+            list = new JList<DVD>();
+    
+            scrollPane.setVerticalScrollBarPolicy(
+                            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    
+            list.setBorder(javax.swing.BorderFactory.createTitledBorder("List Of Rentals"));
+            list.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+            list.setToolTipText("Select a rental to return");
+            list.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                    selectMouseClicked(e);
+                }
+            });
+            scrollPane.setViewportView(list);
+    
+            this.add(scrollPane, BorderLayout.CENTER);
+            
+            buttonPanel = new JPanel();
+            buttonPanel.setLayout(new GridLayout(3,1));
+            
+            rentDVDB = new JButton("Rent DVD");
+            rentDVDB.addActionListener(this);
+            buttonPanel.add(rentDVDB);
+            
+            rentGameB = new JButton("Rent Game");
+            rentGameB.addActionListener(this);
+            buttonPanel.add(rentGameB);
+            
+            returnB = new JButton("Return");
+            returnB.addActionListener(this);
+            buttonPanel.add(returnB);
+            
+            this.add(buttonPanel, BorderLayout.EAST);
+    
+            this.setJMenuBar(menuBar());
+    	    this.pack();
+    	    this.setLocationRelativeTo(null);
+    	    this.setVisible(true);
+    	    this.setSize(1000, 400);
+    	    this.setResizable(true);
+        }
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		JComponent comp = (JComponent) e.getSource();
 
-		if (comp == rentDVD) {
+		if (comp == rentDVDI || comp == rentDVDB) {
 			// System.out.print("yeah, the button works");
 			DVD unit = new DVD();
 			RentDVDDialog rent = new RentDVDDialog(new JFrame(), unit);
@@ -113,7 +134,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 			
 		}
 
-		if (comp == rentGame) {
+		if (comp == rentGameI || comp == rentGameB) {
 			Game unit = new Game();
 			RentGameDialog rent = new RentGameDialog(new JFrame(), unit);
 			rent.setFrame();
