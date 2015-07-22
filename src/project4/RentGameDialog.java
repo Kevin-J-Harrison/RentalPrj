@@ -39,6 +39,11 @@ public class RentGameDialog extends JDialog implements ActionListener {
 	private Game unit;
 
 	public RentGameDialog(JFrame parent, Game g) {
+	    	consoles = new PlayerType[5];
+	    	for(int i = 0; i < consoles.length; i++) {
+	    	    consoles[i] = PlayerType.get
+	    	}
+	    	
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(6, 2));
 		panel.setVisible(true);

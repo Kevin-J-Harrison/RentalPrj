@@ -31,7 +31,7 @@ public class RentalStore extends AbstractListModel{
 	public void addDVD(DVD unit) {
 	    	listDVDs.add(unit);
 	    
-	   //fireIntervalAdded();
+	    	fireIntervalAdded(unit, listDVDs.size(), 0);
 	}
 	
 	//TO-DO
