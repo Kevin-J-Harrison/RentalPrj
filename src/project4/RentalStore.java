@@ -24,8 +24,8 @@ public class RentalStore extends AbstractListModel{
 	}
 
 	@Override
-	public DVD getElementAt(int index) {
-		return listDVDs.get(index);
+	public Object getElementAt(int arg0) {
+		return "It works?";
 	}
 	
 	public int indexOf(DVD unit) {
@@ -48,7 +48,7 @@ public class RentalStore extends AbstractListModel{
 	
 	public void deleteDVD(int index) {
 		listDVDs.remove(index);
-		fireIntervalRemoved(this, index, index);
+		fireIntervalRemoved(this, 0, listDVDs.size());
 	}
 	
 	public void deleteDVD(DVD unit) {

@@ -28,16 +28,19 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	private JList<DVD> list;
 	private DVD d;
+	private Game g;
 	
 	private RentalStore store;
 
 	public RentalStoreGUI() {
 	    
-		setFrame();
+	    	setFrame();
 		store = new RentalStore();
 		list.setModel(store);
 		d = new DVD();
-
+		g = new Game();
+		
+		
 	}
 
 	public JMenuBar menuBar() {
@@ -74,11 +77,8 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		return menu;
 	}
 	
-	private void setFrame() {
-	    this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-	    this.setTitle("Electric Boogaloo DVD & Game Rental");
-        
-            scrollPane = new JScrollPane();
+	private JScrollPane scrollPane() {
+	    scrollPane = new JScrollPane();
             list = new JList<DVD>();
     
             scrollPane.setVerticalScrollBarPolicy(
@@ -89,14 +89,16 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
             list.setToolTipText("Select a rental to return");
             list.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent e) {
-                    selectMouseClicked(e);
+                    
                 }
             });
             scrollPane.setViewportView(list);
-    
-            this.add(scrollPane, BorderLayout.CENTER);
             
-            buttonPanel = new JPanel();
+            return scrollPane;
+	}
+	
+	private JPanel buttonPanel() {
+	    buttonPanel = new JPanel();
             buttonPanel.setLayout(new GridLayout(3,1));
             
             rentDVDB = new JButton("Rent DVD");
@@ -111,9 +113,17 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
             returnB.addActionListener(this);
             buttonPanel.add(returnB);
             
-            this.add(buttonPanel, BorderLayout.EAST);
-    
+            return buttonPanel;
+	}
+	
+	private void setFrame() {
+	    this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+	    this.setTitle("Electric Boogaloo DVD & Game Rental");
+            
+            this.add(scrollPane(), BorderLayout.CENTER);
+            this.add(buttonPanel(), BorderLayout.EAST);
             this.setJMenuBar(menuBar());
+            
     	    this.pack();
     	    this.setLocationRelativeTo(null);
     	    this.setVisible(true);
@@ -128,7 +138,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		if (comp == rentDVDI || comp == rentDVDB) {
 			// System.out.print("yeah, the button works");
 			DVD unit = new DVD();
-			RentDVDDialog rent = new RentDVDDialog(new JFrame(), unit);
+			RentDVDDialog rent = new RentDVDDialog(this, unit);
 			rent.setFrame();
 			store.addDVD(unit);
 			
@@ -140,16 +150,25 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 			rent.setFrame();
 			store.addDVD(unit);
 		}
-
-	}
-	
-	private void selectMouseClicked(java.awt.event.MouseEvent e) {
-		int index = list.getSelectedIndex();
 		
-		if(index != -1) {
-			DVD d = store.getElementAt(index);
+		if (comp == returnI || comp == returnB) {
+		    int index = list.getSelectedIndex();
+		    
+		    if(index != -1) {
+			store.deleteDVD(index);
+		    }
 		}
 	}
+
+	
+	
+//	private void selectMouseClicked(java.awt.event.MouseEvent e) {
+//		int index = list.getSelectedIndex();
+//		
+//		if(index != -1) {
+//			store.deleteDVD(index);
+//		}
+//	}
 
 	public static void main(String[] args) {
 		RentalStoreGUI gui = new RentalStoreGUI();
