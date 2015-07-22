@@ -10,7 +10,7 @@ public class MyDoubleLinkedList<E> implements Serializable {
 	private int sier;
 
 	public MyDoubleLinkedList() {
-
+		super();
 	}
 
 	public int size() {
@@ -26,15 +26,29 @@ public class MyDoubleLinkedList<E> implements Serializable {
 	}
 
 	public void clear() {
-
+		if (top == null)
+			return;
+		
+		if (top == tail)
+			top = tail = null;
 	}
 
 	public void add(E data) {
-
+		if (top == null)
+			return;
+		
+		tail = new DNode<E>(data, tail, null);
 	}
 
 	public void addFirst(E data) {
-
+		if (top == null)
+			return;
+		
+		if (top == tail)
+			top = new DNode<E>(data, null, tail);
+		
+		top = new DNode<E>(data, null, top);
+		
 	}
 
 	public void remove(int index) {
