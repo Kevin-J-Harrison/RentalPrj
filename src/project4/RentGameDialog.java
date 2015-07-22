@@ -12,6 +12,9 @@ import javax.swing.*;
 import project4.PlayerType;
 
 public class RentGameDialog extends JDialog implements ActionListener {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel nameL;
 	private JTextField nameF;
 
@@ -41,7 +44,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 	public RentGameDialog(JFrame parent, Game g) {
 	    	consoles = new PlayerType[5];
 	    	for(int i = 0; i < consoles.length; i++) {
-	    	    consoles[i] = PlayerType.get
+	    	    //consoles[i] = PlayerType.get
 	    	}
 	    	
 		JPanel panel = new JPanel();
