@@ -12,9 +12,9 @@ import javax.swing.*;
 import project4.PlayerType;
 
 public class RentGameDialog extends JDialog implements ActionListener {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private JLabel nameL;
 	private JTextField nameF;
 
@@ -42,11 +42,11 @@ public class RentGameDialog extends JDialog implements ActionListener {
 	private Game unit;
 
 	public RentGameDialog(JFrame parent, Game g) {
-	    	consoles = new PlayerType[5];
-	    	for(int i = 0; i < consoles.length; i++) {
-	    	    //consoles[i] = PlayerType.get
-	    	}
-	    	
+		consoles = new PlayerType[5];
+		for (int i = 0; i < consoles.length; i++) {
+			// consoles[i] = PlayerType.get
+		}
+
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(6, 2));
 		panel.setVisible(true);
@@ -77,7 +77,6 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		panel.add(dueDateL);
 		dueDateF = new JTextField(fmt.format(dueDay));
 		panel.add(dueDateF);
-		
 
 		consoleL = new JLabel("Console Type:");
 		panel.add(consoleL);
@@ -95,34 +94,34 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		getContentPane().add(panel);
 
 	}
-	
+
 	public void setFrame() {
-	    setModal(true);
-	    setSize(300, 250);
-	    setLocationRelativeTo(this);
-	    setVisible(true);
-	    setResizable(true);
+		setModal(true);
+		setSize(300, 250);
+		setLocationRelativeTo(this);
+		setVisible(true);
+		setResizable(true);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	    JComponent comp = (JComponent)e.getSource();
+		JComponent comp = (JComponent) e.getSource();
 		if (comp == OK) {
-		    	unit.setNameOfRenter(nameF.toString());
-			unit.setTitle(titleF.toString());
+			unit.setNameOfRenter(nameF.getText());
+			unit.setTitle(titleF.getText());
 			try {
-				unit.setRentalDate(fmt.parse(rentDateF.toString()));
-				unit.setDueBack(fmt.parse(dueDateF.toString()));
-				PlayerType p = PlayerType.valueOf(consoleF.toString());
+				unit.setRentalDate(fmt.parse(rentDateF.getText()));
+				unit.setDueBack(fmt.parse(dueDateF.getText()));
+				PlayerType p = PlayerType.valueOf(consoleF.getText());
 				unit.setConsole(p);
 			} catch (Exception ex) {
 
 			}
 			dispose();
 		}
-		
-		if(comp == cancel) {
-		    	dispose();
+
+		if (comp == cancel) {
+			dispose();
 		}
 	}
 

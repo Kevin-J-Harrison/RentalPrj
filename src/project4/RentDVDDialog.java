@@ -92,12 +92,12 @@ public class RentDVDDialog extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 	    JComponent comp = (JComponent)e.getSource();
 		if (comp == OK) {
-			unit.setNameOfRenter(nameF.toString());
-			unit.setTitle(titleF.toString());
+			unit.setNameOfRenter(nameF.getText());
+			unit.setTitle(titleF.getText());
 			try {
 
-				unit.setRentalDate(fmt.parse(rentDateF.toString()));
-				unit.setDueBack(fmt.parse(dueDateF.toString()));
+				unit.setRentalDate(fmt.parse(rentDateF.getText()));
+				unit.setDueBack(fmt.parse(dueDateF.getText()));
 			} catch (Exception ex) {
 
 			}
