@@ -5,7 +5,7 @@ public class DNode<E> {
 	public DNode<E> next;
 	public DNode<E> previous;
 	
-	public DNode(E data, DNode<E> next, DNode<E> previous) {
+	public DNode(E data, DNode<E> previous, DNode<E> next) {
 		super();
 		this.data = data;
 		this.next = next;
