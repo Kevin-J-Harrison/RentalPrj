@@ -59,7 +59,7 @@ public class RentalStore extends AbstractListModel {
 
 	// FIX
 	public void updateDVDs() {
-		// fireContentsChanged()
+		fireContentsChanged(this, 0, listDVDs.size());
 	}
 
 	public void save(String filename) throws IOException {
@@ -75,6 +75,8 @@ public class RentalStore extends AbstractListModel {
 		ObjectInputStream is = new ObjectInputStream(fis);
 		listDVDs = (ArrayList<DVD>) is.readObject();
 		is.close();
+		updateDVDs();
+		
 	}
 
 }

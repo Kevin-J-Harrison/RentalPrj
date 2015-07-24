@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -148,6 +149,24 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 			if (index != -1) {
 				DVD unit = store.deleteDVD(index);
+			}
+		}
+		
+		if (comp == save) {
+			try {
+				store.save("test");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		if (comp == open) {
+			try {
+				store.load("test");
+			} catch (ClassNotFoundException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 
