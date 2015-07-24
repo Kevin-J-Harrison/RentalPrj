@@ -25,17 +25,20 @@ public class RentalStore extends AbstractListModel{
 
 	@Override
 	public Object getElementAt(int arg0) {
-		return "It works?";
-	}
+		String s = "";
+		s += "" + listDVDs.get(arg0).getNameOfRenter().toString() + " ";
+		s += "" + listDVDs.get(arg0).getTitle() + " ";
+		s += "" + listDVDs.get(arg0).getRentalDate() + " ";
+		s += "" + listDVDs.get(arg0).getDueBack();
+		
+		return s;
 	
-	public int indexOf(DVD unit) {
-		return listDVDs.indexOf(unit);
 	}
 	
 	public void addDVD(DVD unit) {
 	    if(unit != null) {	
 	    	listDVDs.add(unit);
-	    	fireIntervalAdded(this, listDVDs.size()-1, listDVDs.size()-1);
+	    	fireIntervalAdded(this, 0, listDVDs.size());
 	    }
 	}
 	
@@ -45,15 +48,11 @@ public class RentalStore extends AbstractListModel{
 			fireIntervalAdded(this, index, index);
 		}
 	}
-	
+
 	public DVD deleteDVD(int index) {
 		listDVDs.remove(index);
 		fireIntervalRemoved(this, 0, listDVDs.size());
-		return listDVDs.get(index);
-	}
-	
-	public void deleteDVD(DVD unit) {
-		listDVDs.remove(indexOf(unit));
+		return listDVDs.get(index);               
 	}
 	
 	//FIX
