@@ -5,21 +5,24 @@ import java.util.GregorianCalendar;
 
 public class Game extends DVD {
 
+	private static final long serialVersionUID = 1L;
+
 	private PlayerType console;
-	
+
 	public Game() {
 		super();
 	}
-	
+
 	public Game(GregorianCalendar rentalDateP, GregorianCalendar dueDateP,
-			String nameOfRenterP, String titleP, PlayerType console) {
-		this.bought = rentalDateP;
-		this.dueBack = dueDateP;
-		this.nameOfRenter = nameOfRenterP;
-		this.title = titleP;
-		this.console = console;
+			String nameOfRenterP, String titleP, PlayerType consoleP) {
+		super();
+		bought = rentalDateP;
+		dueBack = dueDateP;
+		nameOfRenter = nameOfRenterP;
+		title = titleP;
+		console = consoleP;
 	}
-	
+
 	public GregorianCalendar getRentalDate() {
 		return bought;
 	}
@@ -51,15 +54,15 @@ public class Game extends DVD {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	public PlayerType getConsole() {
 		return console;
 	}
-	
+
 	public void setConsole(PlayerType console) {
 		this.console = console;
 	}
-	
+
 	public double getCost() {
 		double cost = 0.0;
 		return cost;

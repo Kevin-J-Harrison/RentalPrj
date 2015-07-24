@@ -3,7 +3,9 @@ package project4;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -42,6 +44,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 	private Game unit;
 
 	public RentGameDialog(JFrame parent, Game g) {
+		closeStatus = false;
 		consoles = new PlayerType[5];
 		for (int i = 0; i < consoles.length; i++) {
 			// consoles[i] = PlayerType.get
@@ -70,7 +73,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		panel.add(rentDateF);
 
 		// creates a suggested due date of 1 week
-		calendar.add(calendar.DAY_OF_MONTH, 7);
+		calendar.add(Calendar.DAY_OF_MONTH, 7);
 		Date dueDay = calendar.getTime();
 
 		dueDateL = new JLabel("Due Back:");
@@ -103,20 +106,31 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		setResizable(true);
 	}
 
+	public boolean getCloseStatus() {
+		return closeStatus;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JComponent comp = (JComponent) e.getSource();
 		if (comp == OK) {
+			closeStatus = true;
 			unit.setNameOfRenter(nameF.getText());
 			unit.setTitle(titleF.getText());
 			try {
 				unit.setRentalDate(fmt.parse(rentDateF.getText()));
-				unit.setDueBack(fmt.parse(dueDateF.getText()));
-				PlayerType p = PlayerType.valueOf(consoleF.getText());
-				unit.setConsole(p);
-			} catch (Exception ex) {
+			} catch (ParseException ex) {
 
 			}
+
+			try {
+				unit.setDueBack(fmt.parse(dueDateF.getText()));
+			} catch (ParseException ex) {
+
+			}
+
+			PlayerType p = PlayerType.valueOf(consoleF.getText());
+			unit.setConsole(p);
 			dispose();
 		}
 

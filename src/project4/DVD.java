@@ -6,65 +6,65 @@ import java.util.GregorianCalendar;
 
 public class DVD implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    protected GregorianCalendar bought;
-    protected GregorianCalendar dueBack;
+	protected GregorianCalendar bought;
+	protected GregorianCalendar dueBack;
 
-    protected String nameOfRenter;
-    protected String title;
+	protected String nameOfRenter;
+	protected String title;
 
-    public DVD() {
-	bought = new GregorianCalendar();
-	dueBack = new GregorianCalendar();
-    }
+	public DVD() {
+		bought = new GregorianCalendar();
+		dueBack = new GregorianCalendar();
+	}
 
-    public DVD(GregorianCalendar rentalDateP, GregorianCalendar dueDateP,
-	    String nameOfRenterP, String titleP) {
-	bought = new GregorianCalendar(); 
-	bought = rentalDateP;
-	
-	dueBack = new GregorianCalendar();
-	dueBack = dueDateP;
-	
-	nameOfRenter = nameOfRenterP;
-	title = titleP;
-    }
+	public DVD(GregorianCalendar rentalDateP, GregorianCalendar dueDateP,
+			String nameOfRenterP, String titleP) {
+		bought = new GregorianCalendar();
+		bought = rentalDateP;
 
-    public GregorianCalendar getRentalDate() {
-	return bought;
-    }
+		dueBack = new GregorianCalendar();
+		dueBack = dueDateP;
 
-    public void setRentalDate(Date rented) {
-	bought.setTime(rented);
-    }
+		nameOfRenter = nameOfRenterP;
+		title = titleP;
+	}
 
-    public GregorianCalendar getDueBack() {
-	return dueBack;
-    }
+	public GregorianCalendar getRentalDate() {
+		return bought;
+	}
 
-    public void setDueBack(Date due) {
-	dueBack.setTime(due);
-    }
+	public void setRentalDate(Date bought) {
+		this.bought.setTime(bought);
+	}
 
-    public String getNameOfRenter() {
-	return nameOfRenter;
-    }
+	public GregorianCalendar getDueBack() {
+		return dueBack;
+	}
 
-    public void setNameOfRenter(String nameOfRenter) {
-	this.nameOfRenter = nameOfRenter;
-    }
+	public void setDueBack(Date dueBack) {
+		this.dueBack.setTime(dueBack);
+	}
 
-    public String getTitle() {
-	return title;
-    }
+	public String getNameOfRenter() {
+		return nameOfRenter;
+	}
 
-    public void setTitle(String title) {
-	this.title = title;
-    }
+	public void setNameOfRenter(String nameOfRenter) {
+		this.nameOfRenter = nameOfRenter;
+	}
 
-    public double getCost() {
-	double cost = 0.0;
-	return cost;
-    }
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public double getCost() {
+		double cost = 0.0;
+		return cost;
+	}
 }

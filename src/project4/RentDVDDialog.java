@@ -10,8 +10,8 @@ import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class RentDVDDialog extends JDialog implements ActionListener{
-	
+public class RentDVDDialog extends JDialog implements ActionListener {
+
 	private static final long serialVersionUID = 1L;
 
 	private JLabel nameL;
@@ -37,10 +37,12 @@ public class RentDVDDialog extends JDialog implements ActionListener{
 	private DVD unit;
 
 	public RentDVDDialog(JFrame parent, DVD d) {
+		closeStatus = false;
+
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(5, 2));
 		panel.setVisible(true);
-		
+
 		unit = d;
 
 		nameL = new JLabel("Your Name:");
@@ -60,7 +62,7 @@ public class RentDVDDialog extends JDialog implements ActionListener{
 		panel.add(rentDateF);
 
 		// creates a suggested due date of 1 week
-		calendar.add(calendar.DAY_OF_MONTH, 7);
+		calendar.add(Calendar.DAY_OF_MONTH, 7);
 		Date dueDay = calendar.getTime();
 
 		dueDateL = new JLabel("Due Back:");
@@ -79,40 +81,45 @@ public class RentDVDDialog extends JDialog implements ActionListener{
 		getContentPane().add(panel);
 
 	}
-	
+
 	public void setFrame() {
-	    setModal(true);
-	    setSize(300, 250);
-	    setLocationRelativeTo(this);
-	    setVisible(true);
-	    setResizable(true);
+		setModal(true);
+		setSize(300, 250);
+		setLocationRelativeTo(this);
+		setVisible(true);
+		setResizable(true);
 	}
-	
+
+	public boolean getCloseStatus() {
+		return closeStatus;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	    JComponent comp = (JComponent)e.getSource();
+		JComponent comp = (JComponent) e.getSource();
 		if (comp == OK) {
+			closeStatus = true;
 			unit.setNameOfRenter(nameF.getText());
 			unit.setTitle(titleF.getText());
-		
-			try {	
-			    unit.setRentalDate(fmt.parse(rentDateF.getText()));
-			} catch (Exception ex) {
-			    System.out.println("ERROR RENTAL DATE NOT SET");
+
+			try {
+				unit.setRentalDate(fmt.parse(rentDateF.getText()));
+			} catch (ParseException ex) {
+				System.out.println("ERROR RENTAL DATE NOT SET");
 			}
-				
-    			try {
-    			    unit.setDueBack(fmt.parse(dueDateF.getText()));
-    			} catch (Exception e1) {
-    			    System.out.println("ERROR DUE DATE NOT SET");
-    			}
-			
+
+			try {
+				unit.setDueBack(fmt.parse(dueDateF.getText()));
+			} catch (ParseException ex) {
+				System.out.println("ERROR DUE DATE NOT SET");
+			}
+
 			dispose();
 
 		}
-		
-		if(comp == cancel) {
-		    	dispose();
+
+		if (comp == cancel) {
+			dispose();
 		}
 	}
 }
