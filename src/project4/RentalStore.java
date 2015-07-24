@@ -15,12 +15,13 @@ public class RentalStore extends AbstractListModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<DVD> listDVDs;
-
+	//private ArrayList<DVD> listDVDs;
+	private MyDoubleLinkedList<DVD> listDVDs;
 	private SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 
 	public RentalStore() {
-		listDVDs = new ArrayList<DVD>();
+		//listDVDs = new ArrayList<DVD>();
+		listDVDs = new MyDoubleLinkedList<DVD>();
 	}
 
 	@Override
@@ -73,7 +74,8 @@ public class RentalStore extends AbstractListModel {
 			ClassNotFoundException {
 		FileInputStream fis = new FileInputStream(filename);
 		ObjectInputStream is = new ObjectInputStream(fis);
-		listDVDs = (ArrayList<DVD>) is.readObject();
+		//listDVDs = (ArrayList<DVD>) is.readObject();
+		listDVDs = (MyDoubleLinkedList<DVD>) is.readObject();
 		is.close();
 		updateDVDs();
 		
