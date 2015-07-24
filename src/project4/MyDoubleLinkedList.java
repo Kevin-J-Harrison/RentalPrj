@@ -28,7 +28,6 @@ public class MyDoubleLinkedList<E> implements Serializable {
 		return count;
 	}
 
-	// still need to figure out clear
 	public void clear() {
 		if (top == null)
 			return;
@@ -72,7 +71,6 @@ public class MyDoubleLinkedList<E> implements Serializable {
 
 	}
 
-	// not sure how to return E, which should be a generic for the list?
 	public E remove(int index) {
 		if (size == 0)
 			return null;
@@ -81,13 +79,15 @@ public class MyDoubleLinkedList<E> implements Serializable {
 			top = tail = null;
 			size = 0;
 			removed = true;
-			return null;
+			return top.getData();
 		}
 
 		if (index == size) {
+			DNode<E> temp = tail;
 			tail = tail.getPrevious();
 			size--;
 			removed = true;
+			return temp.getData();
 		}
 
 		DNode<E> temp = top.getNext();
@@ -97,29 +97,28 @@ public class MyDoubleLinkedList<E> implements Serializable {
 				temp.getNext().setPrevious(temp.getPrevious());
 				size--;
 				removed = true;
+				return temp.getData();
 			}
 			temp = temp.getNext();
 		}
 		return null;
 	}
 
-	// still don't know how to return E, which should be a generic for the list?
 	public E get(int index) {
 		if (size == 0)
 			return null;
 
-		if (index == 1) {
-			return top;
-		}
-		
-		if (index == size) {
-			return tail;
-		}
-		
+		if (index == 1)
+			return top.getData();
+
+		if (index == size)
+			return tail.getData();
+
 		DNode<E> temp = top.getNext();
 		for (int i = 1; i <= size; i++) {
 			if (i == index) {
-				return temp;
+				return temp.getData();
+			}
 		}
 		return null;
 	}
