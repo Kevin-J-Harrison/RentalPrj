@@ -92,6 +92,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
                     
                 }
             });
+           // scrollPane.addMouseListener(new java.awt.event.MouseAdapter());
             scrollPane.setViewportView(list);
             
             return scrollPane;
@@ -155,20 +156,10 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		    int index = list.getSelectedIndex();
 		    
 		    if(index != -1) {
-			store.deleteDVD(index);
+			DVD unit = new store.deleteDVD(index);
 		    }
 		}
 	}
-
-	
-	
-//	private void selectMouseClicked(java.awt.event.MouseEvent e) {
-//		int index = list.getSelectedIndex();
-//		
-//		if(index != -1) {
-//			store.deleteDVD(index);
-//		}
-//	}
 
 	public static void main(String[] args) {
 		RentalStoreGUI gui = new RentalStoreGUI();

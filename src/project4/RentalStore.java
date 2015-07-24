@@ -46,9 +46,10 @@ public class RentalStore extends AbstractListModel{
 		}
 	}
 	
-	public void deleteDVD(int index) {
+	public DVD deleteDVD(int index) {
 		listDVDs.remove(index);
 		fireIntervalRemoved(this, 0, listDVDs.size());
+		return listDVDs.get(index);
 	}
 	
 	public void deleteDVD(DVD unit) {
