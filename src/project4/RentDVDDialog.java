@@ -7,7 +7,7 @@ import java.util.*;
 
 import javax.swing.*;
 
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class RentDVDDialog extends JDialog implements ActionListener{
@@ -94,13 +94,19 @@ public class RentDVDDialog extends JDialog implements ActionListener{
 		if (comp == OK) {
 			unit.setNameOfRenter(nameF.getText());
 			unit.setTitle(titleF.getText());
-			try {
-
-				unit.setRentalDate(fmt.parse(rentDateF.getText()));
-				unit.setDueBack(fmt.parse(dueDateF.getText()));
+		
+			try {	
+			    unit.setRentalDate(fmt.parse(rentDateF.getText()));
 			} catch (Exception ex) {
-
+			    System.out.println("ERROR RENTAL DATE NOT SET");
 			}
+				
+    			try {
+    			    unit.setDueBack(fmt.parse(dueDateF.getText()));
+    			} catch (Exception e1) {
+    			    System.out.println("ERROR DUE DATE NOT SET");
+    			}
+			
 			dispose();
 
 		}

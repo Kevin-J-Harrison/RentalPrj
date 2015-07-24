@@ -22,7 +22,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 	private JTextField titleF;
 
 	private GregorianCalendar calendar = new GregorianCalendar();
-	private SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+	private final SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 
 	private JLabel rentDateL;
 	private JTextField rentDateF;

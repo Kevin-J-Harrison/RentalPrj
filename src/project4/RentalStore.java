@@ -1,8 +1,11 @@
 package project4;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
+
 import javax.xml.parsers.*;
+
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
@@ -13,6 +16,8 @@ public class RentalStore extends AbstractListModel{
 	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<DVD> listDVDs;
+	
+	private SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public RentalStore() {
 		listDVDs = new ArrayList<DVD>();
@@ -26,10 +31,12 @@ public class RentalStore extends AbstractListModel{
 	@Override
 	public Object getElementAt(int arg0) {
 		String s = "";
-		s += "" + listDVDs.get(arg0).getNameOfRenter().toString() + " ";
+		s += "" + listDVDs.get(arg0).getNameOfRenter() + " ";
 		s += "" + listDVDs.get(arg0).getTitle() + " ";
-		s += "" + listDVDs.get(arg0).getRentalDate() + " ";
-		s += "" + listDVDs.get(arg0).getDueBack();
+		if(listDVDs.get(arg0).getRentalDate() != null) {
+		    s += "" + fmt.format(listDVDs.get(arg0).getRentalDate().getTime()) + " ";
+		}
+		s += "" + fmt.format(listDVDs.get(arg0).getDueBack().getTime());
 		
 		return s;
 	
@@ -41,18 +48,12 @@ public class RentalStore extends AbstractListModel{
 	    	fireIntervalAdded(this, 0, listDVDs.size());
 	    }
 	}
-	
-	public void addDVD(int index, DVD unit) {
-		if(unit != null) {
-			listDVDs.add(index, unit);
-			fireIntervalAdded(this, index, index);
-		}
-	}
 
 	public DVD deleteDVD(int index) {
+	    	DVD unit = listDVDs.get(index);
 		listDVDs.remove(index);
-		fireIntervalRemoved(this, 0, listDVDs.size());
-		return listDVDs.get(index);               
+		fireIntervalRemoved(unit, 0, listDVDs.size());
+		return unit;             
 	}
 	
 	//FIX
