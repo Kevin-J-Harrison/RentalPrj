@@ -37,6 +37,7 @@ public class RentalStore extends AbstractListModel {
 	@Override
 	public Object getElementAt(int arg0) {
 		DVD d = listDVDs.get(arg0);
+
 		String s = "";
 		if (d.getNameOfRenter() != null) {
 			s += "" + d.getNameOfRenter() + " ";
@@ -48,8 +49,14 @@ public class RentalStore extends AbstractListModel {
 			s += "" + fmt.format(listDVDs.get(arg0).getRentalDate().getTime()) + " ";
 		}
 		if (d.getDueBack() != null) {
-			s += "" + fmt.format(d.getDueBack().getTime());
+			s += "" + fmt.format(d.getDueBack().getTime()) + " ";
 		}
+		
+		if(d instanceof Game) {
+			s += "" +((Game) d).getConsole();
+		}
+		
+	
 
 		return s;
 

@@ -14,7 +14,7 @@ public class MyDoubleLinkedList<E> implements Serializable {
 
 	public MyDoubleLinkedList() {
 		super();
-		top =  null;
+		top = null;
 		tail = null;
 		size = 0;
 	}
@@ -93,8 +93,8 @@ public class MyDoubleLinkedList<E> implements Serializable {
 			removed = true;
 			return temp.getData();
 		}
-		
-		if (index == 1) {
+
+		if (index == 0) {
 			DNode<E> temp = top;
 			top = top.getNext();
 			top.setPrevious(null);
@@ -103,16 +103,15 @@ public class MyDoubleLinkedList<E> implements Serializable {
 		}
 
 		DNode<E> temp = top.getNext();
-		for (int i = 2; i <= size; i++) {
+		for (int i = 1; i <= size; i++) {
 			if (i == index) {
 				temp.getPrevious().setNext(temp.getNext());
 				temp.getNext().setPrevious(temp.getPrevious());
 				size--;
 				removed = true;
 				return temp.getData();
-			}
-			else {
-			temp = temp.getNext();
+			} else {
+				temp = temp.getNext();
 			}
 		}
 		return null;
@@ -132,8 +131,7 @@ public class MyDoubleLinkedList<E> implements Serializable {
 		for (int i = 1; i <= size; i++) {
 			if (i == index) {
 				return temp.getData();
-			}
-			else {
+			} else {
 				temp = temp.getNext();
 			}
 		}
