@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class MyDoubleLinkedList<E> implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private DNode<E> top;
 	private DNode<E> tail;
 
