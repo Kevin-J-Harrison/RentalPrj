@@ -11,17 +11,21 @@ import org.xml.sax.*;
 
 import javax.management.RuntimeErrorException;
 import javax.swing.AbstractListModel;
+import project4.MyDoubleLinkedList;
 
 public class RentalStore extends AbstractListModel {
 
 	private static final long serialVersionUID = 1L;
 
-	// private ArrayList<DVD> listDVDs;
+	//private ArrayList<DVD> listDVDs;
+	//private LinkedList<DVD> listDVDs;
 	private MyDoubleLinkedList<DVD> listDVDs;
 	private SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
 
 	public RentalStore() {
-		// listDVDs = new ArrayList<DVD>();
+
+		//listDVDs = new ArrayList<DVD>();
+		//listDVDs = new LinkedList<DVD>();
 		listDVDs = new MyDoubleLinkedList<DVD>();
 	}
 
@@ -32,14 +36,20 @@ public class RentalStore extends AbstractListModel {
 
 	@Override
 	public Object getElementAt(int arg0) {
+		DVD d = listDVDs.get(arg0);
 		String s = "";
-		s += "" + listDVDs.get(arg0).getNameOfRenter() + " ";
-		s += "" + listDVDs.get(arg0).getTitle() + " ";
-		if (listDVDs.get(arg0).getRentalDate() != null) {
-			s += "" + fmt.format(listDVDs.get(arg0).getRentalDate().getTime())
-					+ " ";
+		if (d.getNameOfRenter() != null) {
+			s += "" + d.getNameOfRenter() + " ";
 		}
-		s += "" + fmt.format(listDVDs.get(arg0).getDueBack().getTime());
+		if (d.getTitle() != null) {
+			s += "" + d.getTitle() + " ";
+		}
+		if (d.getRentalDate() != null) {
+			s += "" + fmt.format(listDVDs.get(arg0).getRentalDate().getTime()) + " ";
+		}
+		if (d.getDueBack() != null) {
+			s += "" + fmt.format(d.getDueBack().getTime());
+		}
 
 		return s;
 
@@ -59,7 +69,6 @@ public class RentalStore extends AbstractListModel {
 		return unit;
 	}
 
-	// FIX
 	public void updateDVDs() {
 		fireContentsChanged(this, 0, listDVDs.size());
 	}
@@ -71,11 +80,13 @@ public class RentalStore extends AbstractListModel {
 		os.close();
 	}
 
+
 	public void load(String filename) throws IOException,
 			ClassNotFoundException {
 		FileInputStream fis = new FileInputStream(filename);
 		ObjectInputStream is = new ObjectInputStream(fis);
-		// listDVDs = (ArrayList<DVD>) is.readObject();
+		//listDVDs = (ArrayList<DVD>) is.readObject();
+		//listDVDs = (LinkedList<DVD>) is.readObject();
 		listDVDs = (MyDoubleLinkedList<DVD>) is.readObject();
 		is.close();
 		updateDVDs();

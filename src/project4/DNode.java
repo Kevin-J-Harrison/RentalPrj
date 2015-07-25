@@ -1,6 +1,6 @@
 package project4;
 
-public class DNode<E> {
+public class DNode<E>{
 	public E data;
 	public DNode<E> next;
 	public DNode<E> previous;

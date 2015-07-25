@@ -1,12 +1,10 @@
 package project4;
 
 import java.io.Serializable;
+import project4.DNode;
 
 public class MyDoubleLinkedList<E> implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private DNode<E> top;
 	private DNode<E> tail;
@@ -16,8 +14,9 @@ public class MyDoubleLinkedList<E> implements Serializable {
 
 	public MyDoubleLinkedList() {
 		super();
-		top = null;
+		top =  null;
 		tail = null;
+		size = 0;
 	}
 
 	public int size() {
@@ -112,7 +111,7 @@ public class MyDoubleLinkedList<E> implements Serializable {
 		if (size == 0)
 			return null;
 
-		if (index == 1)
+		if (index == 0)
 			return top.getData();
 
 		if (index == size)
