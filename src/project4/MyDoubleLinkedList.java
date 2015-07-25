@@ -102,7 +102,9 @@ public class MyDoubleLinkedList<E> implements Serializable {
 				removed = true;
 				return temp.getData();
 			}
+			else {
 			temp = temp.getNext();
+			}
 		}
 		return null;
 	}
@@ -121,6 +123,9 @@ public class MyDoubleLinkedList<E> implements Serializable {
 		for (int i = 1; i <= size; i++) {
 			if (i == index) {
 				return temp.getData();
+			}
+			else {
+				temp = temp.getNext();
 			}
 		}
 		return null;
