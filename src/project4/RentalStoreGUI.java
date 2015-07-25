@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import project4.RentDVDDialog;
 import project4.RentGameDialog;
@@ -156,7 +157,16 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	if (comp == save) {
 	    try {
-		store.save("test");
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(".ser");
+		chooser.setFileFilter(filter);
+		int returnVal = chooser.showOpenDialog(getParent());
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+		   System.out.println("You chose to open this file: " +
+		        chooser.getSelectedFile().getName());
+		}
+		store.save(chooser.getSelectedFile().getName());
+	    
 	    } catch (IOException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();

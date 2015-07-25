@@ -1,6 +1,11 @@
 package project4;
 
-public class DNode<E> {
+import java.io.Serializable;
+
+public class DNode<E> implements Serializable {
+   
+    private static final long serialVersionUID = 1L;
+    
     public E data;
     public DNode<E> next;
     public DNode<E> previous;
