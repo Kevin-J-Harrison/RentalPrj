@@ -172,15 +172,12 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	    try {
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
-			".ser");
+			"All Files", ".ser");
 		chooser.setFileFilter(filter);
-		int returnVal = chooser.showOpenDialog(getParent());
+		int returnVal = chooser.showSaveDialog(getParent());
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-		    System.out.println("You chose to open this file: "
-			    + chooser.getSelectedFile().getName());
+		    store.save(chooser.getSelectedFile().getName());
 		}
-		store.save(chooser.getSelectedFile().getName());
-
 	    } catch (IOException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
@@ -189,7 +186,13 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	if (comp == open) {
 	    try {
-		store.load("test");
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			"All Files", ".ser");
+		chooser.setFileFilter(filter);
+		int returnVal = chooser.showOpenDialog(getParent());
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+		    store.load(chooser.getSelectedFile().getName());
 	    } catch (ClassNotFoundException | IOException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
