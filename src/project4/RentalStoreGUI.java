@@ -159,35 +159,16 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 		if (comp == returnI || comp == returnB) {
 			int index = list.getSelectedIndex();
-			Date returned = null;
 
 			if (index != -1) {
 				DVD unit = store.deleteDVD(index);
-				while (returned == null) {
-					try {
-						returned = fmt.parse(JOptionPane.showInputDialog(
-								"Enter the return date:", "MM/DD/YYYY"));
-
-						GregorianCalendar rday = new GregorianCalendar();
-						rday.setTime(returned);
-						if (rday.compareTo(unit.getRentalDate()) < 0)
-							returned = null;
-
-						Date dueDay = unit.getDueBack().getTime();
-						long diff = returned.getTime() - dueDay.getTime();
-						int dayDiff = (int) TimeUnit.DAYS.convert(diff,
-								TimeUnit.MILLISECONDS);
-
-						JOptionPane.showMessageDialog(
-								this,
-								"Thank you " + unit.getNameOfRenter() + "!\n"
-										+ "for returning " + unit.getTitle()
-										+ ", you owe: "
-										+ numfmt.format(unit.getCost(dayDiff)));
-
-					} catch (ParseException e1) {
-						returned = null;
-					}
+				
+				if (unit instanceof DVD)
+					returning(unit);
+				
+				if (unit instanceof Game) {
+					unit = (Game) unit;
+					returning(unit);
 				}
 			}
 		}
@@ -229,6 +210,39 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		}
 	}
 
+	public void returning(DVD d) {
+		DVD unit = d;
+		Date returned = null;
+		
+		while (returned == null) {
+			try {
+				returned = fmt.parse(JOptionPane.showInputDialog(
+						"Enter the return date:", "MM/DD/YYYY"));
+
+				GregorianCalendar rday = new GregorianCalendar();
+				rday.setTime(returned);
+				if (rday.compareTo(unit.getRentalDate()) < 0)
+					returned = null;
+
+				Date dueDay = unit.getDueBack().getTime();
+				long diff = returned.getTime() - dueDay.getTime();
+				int dayDiff = (int) TimeUnit.DAYS.convert(diff,
+						TimeUnit.MILLISECONDS);
+
+				JOptionPane.showMessageDialog(
+						this,
+						"Thank you " + unit.getNameOfRenter() + "!\n"
+								+ "for returning " + unit.getTitle()
+								+ ", you owe: "
+								+ numfmt.format(unit.getCost(dayDiff)));
+				returned = null;
+
+			} catch (ParseException e1) {
+				returned = null;
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		RentalStoreGUI gui = new RentalStoreGUI();
 	}
