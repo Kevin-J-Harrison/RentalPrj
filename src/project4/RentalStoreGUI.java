@@ -19,6 +19,7 @@ import project4.RentalStore;
 public class RentalStoreGUI extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
+    private SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
 
     private JMenuBar menu;
 
@@ -36,7 +37,6 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
     private JList<DVD> list;
 
     private RentalStore store;
-    private SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
 
     public RentalStoreGUI() {
 
@@ -137,7 +137,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	    DVD unit = new DVD();
 	    RentDVDDialog rent = new RentDVDDialog(this, unit);
 	    rent.setFrame();
-	    if (unit.getNameOfRenter() != null) { 
+	    if (unit.getNameOfRenter() != null) {
 		store.addDVD(unit);
 	    }
 	}
@@ -157,23 +157,29 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	    if (index != -1) {
 		DVD unit = store.deleteDVD(index);
 		try {
-			Date returned = fmt.parse(JOptionPane.showInputDialog("Enter the return date:", "MM/DD/YYYY"));
+		    Date returned = fmt.parse(JOptionPane.showInputDialog(
+			    "Enter the return date:", "MM/DD/YYYY"));
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			JOptionPane.showMessageDialog(this, "NOT A VALID INPUT");
+		    // TODO Auto-generated catch block
+		    e1.printStackTrace();
+		    JOptionPane.showMessageDialog(this, "NOT A VALID INPUT");
 		}
+	    }
 	}
 
 	if (comp == save) {
 	    try {
 		JFileChooser chooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Serialized file", ".ser");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			".ser");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showOpenDialog(getParent());
-		if(returnVal == JFileChooser.APPROVE_OPTION) {
-		    store.save(chooser.getSelectedFile().getName());
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+		    System.out.println("You chose to open this file: "
+			    + chooser.getSelectedFile().getName());
 		}
+		store.save(chooser.getSelectedFile().getName());
+
 	    } catch (IOException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
@@ -182,14 +188,8 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	if (comp == open) {
 	    try {
-		JFileChooser chooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Serialized file", ".ser");
-		chooser.setFileFilter(filter);
-		int returnVal = chooser.showOpenDialog(getParent());
-		if(returnVal == JFileChooser.APPROVE_OPTION) {
-		    store.load(chooser.getSelectedFile().getName());
-		}
-	    } catch (Exception e1) {
+		store.load("test");
+	    } catch (ClassNotFoundException | IOException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	    }
@@ -197,7 +197,6 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	if (comp == exit) {
 	    System.exit(0);
-	}
 	}
     }
 
