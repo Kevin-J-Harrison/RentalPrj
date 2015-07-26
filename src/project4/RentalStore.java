@@ -98,8 +98,8 @@ public class RentalStore extends AbstractListModel {
 	updateDVDs();
 
     }
-    
+
     public <E> MyDoubleLinkedList<DVD> getList() {
-    		return listDVDs;
+	return listDVDs;
     }
 }
