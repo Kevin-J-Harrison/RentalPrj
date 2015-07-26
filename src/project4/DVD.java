@@ -58,8 +58,14 @@ public class DVD implements Serializable {
 		this.title = title;
 	}
 
-	public double getCost() {
+	public double getCost(int dayDiff) {
 		double cost = 0.0;
+		
+		if (dayDiff <= 0)
+			return cost = 1.2;
+		
+		cost = 3.2;
+		
 		return cost;
 	}
 }

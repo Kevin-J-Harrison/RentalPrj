@@ -63,8 +63,14 @@ public class Game extends DVD {
 		this.console = console;
 	}
 
-	public double getCost() {
+	public double getCost(int dayDiff) {
 		double cost = 0.0;
+		
+		if (dayDiff <= 0)
+			return cost = 5;
+		
+		cost = 15;
+		
 		return cost;
 	}
 }
