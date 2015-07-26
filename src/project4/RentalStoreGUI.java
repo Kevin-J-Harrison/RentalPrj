@@ -153,7 +153,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	if (comp == returnI || comp == returnB) {
 	    int index = list.getSelectedIndex();
-
+	    
 	    if (index != -1) {
 		DVD unit = store.deleteDVD(index);
 		try {
