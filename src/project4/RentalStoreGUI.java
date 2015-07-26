@@ -18,23 +18,23 @@ import project4.RentalStore;
 
 public class RentalStoreGUI extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	private SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
+    private static final long serialVersionUID = 1L;
+    private SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
 
-	private JMenuBar menu;
+    private JMenuBar menu;
 
-	private JMenu file;
-	private JMenuItem open, save, exit;
+    private JMenu file;
+    private JMenuItem open, save, exit;
 
-	private JMenu action;
-	private JMenuItem rentDVDI, rentGameI, returnI;
+    private JMenu action;
+    private JMenuItem rentDVDI, rentGameI, returnI;
 
-	private JScrollPane scrollPane;
+    private JScrollPane scrollPane;
 
-	private JPanel buttonPanel;
-	private JButton rentDVDB, rentGameB, returnB;
+    private JPanel buttonPanel;
+    private JButton rentDVDB, rentGameB, returnB;
 
-	private JList<DVD> list;
+    private JList<DVD> list;
 
     private RentalStore store;
 
@@ -129,84 +129,80 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	this.setResizable(true);
     }
 
-	
+    @Override
+    public void actionPerformed(ActionEvent e) {
+	JComponent comp = (JComponent) e.getSource();
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		JComponent comp = (JComponent) e.getSource();
-
-		if (comp == rentDVDI || comp == rentDVDB) {
-			DVD unit = new DVD();
-			RentDVDDialog rent = new RentDVDDialog(this, unit);
-			rent.setFrame();
-			if (unit.getNameOfRenter() != null) {
-				store.addDVD(unit);
-			}
-		}
-
-		if (comp == rentGameI || comp == rentGameB) {
-			Game unit = new Game();
-			RentGameDialog rent = new RentGameDialog(this, unit);
-			rent.setFrame();
-			if (unit.getNameOfRenter() != null) {
-				store.addDVD(unit);
-			}
-		}
-
-		if (comp == returnI || comp == returnB) {
-			int index = list.getSelectedIndex();
-
-			if (index != -1) {
-				try {
-					Date returned = fmt.parse(JOptionPane.showInputDialog(
-							"Enter the return date:", "MM/DD/YYYY"));
-				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(this, "NOT A VALID DATE");
-				}
-//				Date returned;
-//				while (!(returned = fmt.parse(JOptionPane.showInputDialog("Enter the return date:",
-//						"MM/DD/YYYY")) instanceof Date)) {
-//					
-				
-			}
-			DVD unit = store.deleteDVD(index);
-		}
-
-		if (comp == save) {
-			try {
-				JFileChooser chooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter(
-						".ser");
-				chooser.setFileFilter(filter);
-				int returnVal = chooser.showOpenDialog(getParent());
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					System.out.println("You chose to open this file: "
-							+ chooser.getSelectedFile().getName());
-				}
-				store.save(chooser.getSelectedFile().getName());
-
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-
-		if (comp == open) {
-			try {
-				store.load("test");
-			} catch (ClassNotFoundException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-
-		if (comp == exit) {
-			System.exit(0);
-		}
+	if (comp == rentDVDI || comp == rentDVDB) {
+	    DVD unit = new DVD();
+	    RentDVDDialog rent = new RentDVDDialog(this, unit);
+	    rent.setFrame();
+	    if (unit.getNameOfRenter() != null) {
+		store.addDVD(unit);
+	    }
 	}
 
-	public static void main(String[] args) {
-		RentalStoreGUI gui = new RentalStoreGUI();
+	if (comp == rentGameI || comp == rentGameB) {
+	    Game unit = new Game();
+	    RentGameDialog rent = new RentGameDialog(this, unit);
+	    rent.setFrame();
+	    if (unit.getNameOfRenter() != null) {
+		store.addDVD(unit);
+	    }
 	}
+
+	if (comp == returnI || comp == returnB) {
+	    int index = list.getSelectedIndex();
+	    Date returned = null;
+
+	    if (index != -1) {
+		DVD unit = store.deleteDVD(index);
+		while(returned == null) {
+        		try {
+        		    returned = fmt.parse(JOptionPane.showInputDialog(
+        			    "Enter the return date:", "MM/DD/YYYY"));
+        		} catch (ParseException e1) {
+        		    returned = null;
+        		}
+		}
+	    }
+	}
+
+	if (comp == save) {
+	    try {
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			".ser");
+		chooser.setFileFilter(filter);
+		int returnVal = chooser.showOpenDialog(getParent());
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+		    System.out.println("You chose to open this file: "
+			    + chooser.getSelectedFile().getName());
+		}
+		store.save(chooser.getSelectedFile().getName());
+
+	    } catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+	}
+
+	if (comp == open) {
+	    try {
+		store.load("test");
+	    } catch (ClassNotFoundException | IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+	}
+
+	if (comp == exit) {
+	    System.exit(0);
+	}
+    }
+
+    public static void main(String[] args) {
+	RentalStoreGUI gui = new RentalStoreGUI();
+    }
 
 }
