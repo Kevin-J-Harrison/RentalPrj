@@ -193,7 +193,8 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		int returnVal = chooser.showOpenDialog(getParent());
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 		    store.load(chooser.getSelectedFile().getName());
-	    } catch (ClassNotFoundException | IOException e1) {
+		}
+	    }catch (ClassNotFoundException | IOException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	    }
