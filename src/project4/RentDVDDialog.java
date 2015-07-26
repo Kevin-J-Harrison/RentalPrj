@@ -21,7 +21,7 @@ public class RentDVDDialog extends JDialog implements ActionListener {
     private JTextField titleF;
 
     private GregorianCalendar calendar = new GregorianCalendar();
-    private SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
 
     private JLabel rentDateL;
     private JTextField rentDateF;

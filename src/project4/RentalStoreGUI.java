@@ -5,6 +5,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,6 +19,7 @@ import project4.RentalStore;
 public class RentalStoreGUI extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
+    private SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
 
     private JMenuBar menu;
 
@@ -149,9 +153,16 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	if (comp == returnI || comp == returnB) {
 	    int index = list.getSelectedIndex();
-
+	    
 	    if (index != -1) {
 		DVD unit = store.deleteDVD(index);
+		try {
+			Date returned = fmt.parse(JOptionPane.showInputDialog("Enter the return date:", "MM/DD/YYYY"));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(this, "NOT A VALID INPUT");
+		}
 	    }
 	}
 
