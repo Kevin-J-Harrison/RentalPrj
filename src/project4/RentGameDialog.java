@@ -70,6 +70,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 
 	// creates a suggested due date of 1 week
 	calendar.add(Calendar.DAY_OF_MONTH, 7);
+	calendar.setLenient(false);
 	Date dueDay = calendar.getTime();
 
 	dueDateL = new JLabel("Due Back:");
@@ -110,23 +111,22 @@ public class RentGameDialog extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 	JComponent comp = (JComponent) e.getSource();
 	if (comp == OK) {
-	    closeStatus = true;
 	    unit.setNameOfRenter(nameF.getText());
 	    unit.setTitle(titleF.getText());
-	    try {
-		unit.setRentalDate(fmt.parse(rentDateF.getText()));
-	    } catch (ParseException ex) {
+	    while (closeStatus == false) {
+		try {
+		    unit.setRentalDate(fmt.parse(rentDateF.getText()));
+		} catch (ParseException ex) {
 
+		}
+
+		try {
+		    unit.setDueBack(fmt.parse(dueDateF.getText()));
+		} catch (ParseException ex) {
+
+		}
 	    }
 
-	    try {
-		unit.setDueBack(fmt.parse(dueDateF.getText()));
-	    } catch (ParseException ex) {
-
-	    }
-
-	    
-	    
 	    PlayerType p = PlayerType.valueOf(consoleF.getText());
 	    unit.setConsole(p);
 	    dispose();
