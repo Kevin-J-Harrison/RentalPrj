@@ -221,8 +221,11 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 			
 			GregorianCalendar rday = new GregorianCalendar();
 			rday.setTime(returned);
-			if (rday.compareTo(unit.getRentalDate()) < 0)
+
+			if (rday.compareTo(unit.getRentalDate()) < 0) {
+				JOptionPane.showMessageDialog(this, "DATE ENTERED IS BEFORE DATE RENTED");
 				returned = null;
+			}
 
 			Date dueDay = unit.getDueBack().getTime();
 			long diff = returned.getTime() - dueDay.getTime();
