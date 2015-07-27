@@ -162,17 +162,10 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 			if (index != -1) {
 				DVD unit = store.deleteDVD(index);
-				
-				if (unit instanceof DVD)
-					returning(unit);
-				
-				if (unit instanceof Game) {
-					unit = (Game) unit;
-					returning(unit);
-				}
+				returning(unit);
 			}
 		}
-
+		
 		if (comp == save) {
 			try {
 				JFileChooser chooser = new JFileChooser();
@@ -212,34 +205,36 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	public void returning(DVD d) {
 		DVD unit = d;
+		if (unit instanceof Game) {
+		    unit = (Game)unit;
+		}
+		
 		Date returned = null;
 		
 		while (returned == null) {
 			try {
 				returned = fmt.parse(JOptionPane.showInputDialog(
 						"Enter the return date:", "MM/DD/YYYY"));
-
-				GregorianCalendar rday = new GregorianCalendar();
-				rday.setTime(returned);
-				if (rday.compareTo(unit.getRentalDate()) < 0)
-					returned = null;
-
-				Date dueDay = unit.getDueBack().getTime();
-				long diff = returned.getTime() - dueDay.getTime();
-				int dayDiff = (int) TimeUnit.DAYS.convert(diff,
-						TimeUnit.MILLISECONDS);
-
-				JOptionPane.showMessageDialog(
-						this,
-						"Thank you " + unit.getNameOfRenter() + "!\n"
-								+ "for returning " + unit.getTitle()
-								+ ", you owe: "
-								+ numfmt.format(unit.getCost(dayDiff)));
-				returned = null;
-
 			} catch (ParseException e1) {
 				returned = null;
 			}
+			
+			GregorianCalendar rday = new GregorianCalendar();
+			rday.setTime(returned);
+			if (rday.compareTo(unit.getRentalDate()) < 0)
+				returned = null;
+
+			Date dueDay = unit.getDueBack().getTime();
+			long diff = returned.getTime() - dueDay.getTime();
+			int dayDiff = (int) TimeUnit.DAYS.convert(diff,
+					TimeUnit.MILLISECONDS);
+
+			JOptionPane.showMessageDialog(
+					this,
+					"Thank you " + unit.getNameOfRenter() + "!\n"
+							+ "for returning " + unit.getTitle()
+							+ ", you owe: "
+							+ numfmt.format(unit.getCost(dayDiff)));
 		}
 	}
 	
