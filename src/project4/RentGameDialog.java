@@ -34,7 +34,6 @@ public class RentGameDialog extends JDialog implements ActionListener {
 
     private JLabel consoleL;
     private JTextField consoleF;
-    private PlayerType[] consoles;
 
     private JButton OK;
     private JButton cancel;
@@ -45,10 +44,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 
     public RentGameDialog(JFrame parent, Game g) {
 	closeStatus = false;
-	consoles = new PlayerType[5];
-	for (int i = 0; i < consoles.length; i++) {
-	    // consoles[i] = PlayerType.get
-	}
+	int i = 0;
 
 	JPanel panel = new JPanel();
 	panel.setLayout(new GridLayout(6, 2));
@@ -129,6 +125,8 @@ public class RentGameDialog extends JDialog implements ActionListener {
 
 	    }
 
+	    
+	    
 	    PlayerType p = PlayerType.valueOf(consoleF.getText());
 	    unit.setConsole(p);
 	    dispose();

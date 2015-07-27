@@ -52,7 +52,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
     }
 
-    public JMenuBar menuBar() {
+    private JMenuBar menuBar() {
 	menu = new JMenuBar();
 
 	file = new JMenu("File");
@@ -177,7 +177,6 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		    store.save(chooser.getSelectedFile().getName());
 		}
 	    } catch (IOException e1) {
-		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	    }
 	}
@@ -193,7 +192,6 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		    store.load(chooser.getSelectedFile().getName());
 		}
 	    } catch (ClassNotFoundException | IOException e1) {
-		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	    }
 	}
@@ -203,7 +201,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	}
     }
 
-    public void returning(DVD d) {
+    private void returning(DVD d) {
 		DVD unit = d;
 		if (unit instanceof Game) {
 		    unit = (Game)unit;
