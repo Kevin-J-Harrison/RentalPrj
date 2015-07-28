@@ -2,14 +2,24 @@ package project4;
 
 import java.io.Serializable;
 import project4.DNode;
-
+/**
+ * Creates the Doubly Linked List for the Rental Store GUI
+ * 
+ * @author alexvansteel, kevinharrison
+ *
+ * @param <E>
+ */
 public class MyDoubleLinkedList<E> implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    /** Pointer to the first Node of the list. */
     private DNode<E> top;
+    /** Pointer to the last Node of the list. */
     private DNode<E> tail;
 
+    /** Int for the size of the list. */
     private int size;
+    /** Boolean to check if an Node was removed. */
     private boolean removed = false;
 
     public MyDoubleLinkedList() {
@@ -19,6 +29,10 @@ public class MyDoubleLinkedList<E> implements Serializable {
 	size = 0;
     }
 
+    /**
+     * Counts the number of nodes in the list.
+     * @return the number of nodes in the list.
+     */
     public int size() {
 	int count = 0;
 	DNode<E> temp = top;
@@ -31,6 +45,9 @@ public class MyDoubleLinkedList<E> implements Serializable {
 	return count;
     }
 
+    /**
+     * Clears the list of all nodes.
+     */
     public void clear() {
 	if (top == null)
 	    return;
@@ -45,6 +62,10 @@ public class MyDoubleLinkedList<E> implements Serializable {
 	size = 0;
     }
 
+    /**
+     * Adds a node to the end of the list.
+     * @param data data to be entered into the node.
+     */
     public void add(E data) {
 	if (top == null) {
 	    top = tail = new DNode<E>(data, null, null);
@@ -57,6 +78,10 @@ public class MyDoubleLinkedList<E> implements Serializable {
 	size++;
     }
 
+    /**
+     * Adds a node to the top of the list.
+     * @param data data to be entered into the node.
+     */
     public void addFirst(E data) {
 	if (top == null) {
 	    top = tail = new DNode<E>(data, null, null);
@@ -74,6 +99,10 @@ public class MyDoubleLinkedList<E> implements Serializable {
 
     }
 
+    /**
+     * Removes node based on the parameter.
+     * @param index the node to be removed.
+     */
     public E remove(int index) {
 	if (size == 0)
 	    return null;
@@ -117,6 +146,11 @@ public class MyDoubleLinkedList<E> implements Serializable {
 	return null;
     }
 
+    /**
+     * Locates node based on entered index.
+     * @param index node to be found.
+     * @return the data of the found node.
+     */
     public E get(int index) {
 	if (size == 0)
 	    return null;
@@ -138,10 +172,19 @@ public class MyDoubleLinkedList<E> implements Serializable {
 	return null;
     }
 
+    /**
+     * Checks if a node has been removed or not.
+     * @return status of removal of a node.
+     */
     public boolean returnAll() {
 	return removed;
     }
 
+    /**
+     * Checks if the data is found in the nodes
+     * @param data data to be found
+     * @return int showing if the data was found or not found.
+     */
     public int find(E data) {
 	DNode<E> temp = top;
 	for (int i = 0; i <= size; i++) {

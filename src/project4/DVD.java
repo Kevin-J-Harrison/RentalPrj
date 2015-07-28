@@ -3,15 +3,24 @@ package project4;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
+/**
+ * Class to create DVD objects.
+ * 
+ * @author alexvansteel, kevinharrison
+ *
+ */
 public class DVD implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /** Date the DVD was bought. */
     protected GregorianCalendar bought = new GregorianCalendar();
+    /** Date the DVD is due back. */
     protected GregorianCalendar dueBack = new GregorianCalendar();
 
+    /** Name of the Renter. */
     protected String nameOfRenter;
+    /** Title of the DVD. */
     protected String title;
 
     public DVD() {

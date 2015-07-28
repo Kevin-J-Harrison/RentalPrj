@@ -214,6 +214,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 				returned = fmt.parse(JOptionPane.showInputDialog(
 						"Enter the return date:", "MM/DD/YYYY"));
 				GregorianCalendar rday = new GregorianCalendar();
+				rday.setLenient(false);
 				rday.setTime(returned);
 
 				if (rday.compareTo(unit.getRentalDate()) < 0) {

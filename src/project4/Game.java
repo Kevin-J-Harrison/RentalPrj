@@ -2,17 +2,34 @@ package project4;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
-
+/**
+ *  Extends the DVD class to create a Game object.
+ *  
+ * @author alexvansteel, kevinharrison
+ *
+ */
 public class Game extends DVD {
 
 	private static final long serialVersionUID = 1L;
 
+	/** The type of game console. */
 	private PlayerType console;
 
 	public Game() {
 		super();
+		dueBack.setLenient(false);
+		bought.setLenient(false);
 	}
 
+	/**
+	 * Constructor for the Game class
+	 * 
+	 * @param rentalDateP
+	 * @param dueDateP
+	 * @param nameOfRenterP
+	 * @param titleP
+	 * @param consoleP
+	 */
 	public Game(GregorianCalendar rentalDateP, GregorianCalendar dueDateP,
 			String nameOfRenterP, String titleP, PlayerType consoleP) {
 		super();
