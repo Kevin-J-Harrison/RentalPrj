@@ -3,7 +3,7 @@ package project4;
 import java.io.Serializable;
 
 /**
- * Nodes used to create the Doubly Linked List.
+ * Nodes used to create the Doubly Linked List. It implements Serializable.
  * 
  * @author alexvansteel, kevinharrison
  *
@@ -21,9 +21,13 @@ public class DNode<E> implements Serializable {
 
 	/**
 	 * Constructor of the node.
-	 * @param data points to the data
-	 * @param previous points to the previous node
-	 * @param next points to the next node
+	 * 
+	 * @param data
+	 *            points to the data
+	 * @param previous
+	 *            points to the previous node
+	 * @param next
+	 *            points to the next node
 	 */
 	public DNode(E data, DNode<E> previous, DNode<E> next) {
 		super();

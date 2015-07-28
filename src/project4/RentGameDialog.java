@@ -13,36 +13,65 @@ import javax.swing.*;
 
 import project4.PlayerType;
 
+/**
+ * Custom JDialog Box for renting Games.
+ * 
+ * @author alexvansteel, kevinharrison
+ *
+ */
 public class RentGameDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
+	/** Label for the name. */
 	private JLabel nameL;
+	/** Field for entering name. */
 	private JTextField nameF;
 
+	/** Label for title. */
 	private JLabel titleL;
+	/** Field of entering title. */
 	private JTextField titleF;
 
+	/** Gregorian Calendar for calculating dates. */
 	private GregorianCalendar calendar = new GregorianCalendar();
+	/** Format for dates. */
 	private SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
 
+	/** Label for renting. */
 	private JLabel rentDateL;
+	/** Text Field for entering rental date. */
 	private JTextField rentDateF;
 
+	/** Label for due date. */
 	private JLabel dueDateL;
+	/** Text field for entering due date. */
 	private JTextField dueDateF;
 
+	/** Label for the game console. */
 	private JLabel consoleL;
+	/** Text field to enter game console */
 	private JTextField consoleF;
+	/** List of console types. */
 	private PlayerType[] consoles;
 
+	/** Button used for ok. */
 	private JButton OK;
+	/** Button used to cancel the dialog box. */
 	private JButton cancel;
 
+	/** Checks to see if the dialog box was used to enter data. */
 	private boolean closeStatus;
 
+	/** Pointer for the newly created Game object. */
 	private Game unit;
 
+	/**
+	 * Constructor for the Game Dialog Box
+	 * 
+	 * @param parent
+	 * @param g
+	 */
 	public RentGameDialog(JFrame parent, Game g) {
 		consoles = new PlayerType[PlayerType.values().length];
 		int i = 0;
@@ -85,6 +114,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		dueDateF = new JTextField(fmt.format(dueDay));
 		panel.add(dueDateF);
 
+
 		consoleL = new JLabel("Console Type:");
 		panel.add(consoleL);
 		consoleF = new JTextField("GameCube");
@@ -102,6 +132,10 @@ public class RentGameDialog extends JDialog implements ActionListener {
 
 	}
 
+
+	/**
+	 * Sets the parameters for the Dialog Box frame.
+	 */
 	public void setFrame() {
 		setModal(true);
 		setSize(300, 250);
@@ -110,6 +144,11 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		setResizable(true);
 	}
 
+
+
+	/**
+	 * Action Listener and events for using the frame.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JComponent comp = (JComponent) e.getSource();
@@ -128,6 +167,10 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		}
 	}
 
+
+/**
+ * Sets the dates for the day the Game is rented and due.
+ */
 	private void setDates() {
 		closeStatus = false;
 		boolean tryStatus = false;
@@ -183,15 +226,20 @@ public class RentGameDialog extends JDialog implements ActionListener {
 					unit.setDueBack(due);
 				}
 			} catch (ParseException e3) {
-		
 			}
 		}
 	}
 
+
+	/**
+	 * Checks to see if the console is of a valid console type, and sets the
+	 * console type.
+	 */
 	private void setConsole() {
 		closeStatus = false;
 		String console = consoleF.getText();
 		console = console.replaceAll("\\s", "");
+
 		while (closeStatus == false) {
 			for (PlayerType p : consoles) {
 				if (console.equalsIgnoreCase(p.name())) {
