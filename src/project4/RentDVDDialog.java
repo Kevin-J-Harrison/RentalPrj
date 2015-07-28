@@ -63,6 +63,7 @@ public class RentDVDDialog extends JDialog implements ActionListener {
 
 	// creates a suggested due date of 1 week
 	calendar.add(Calendar.DAY_OF_MONTH, 7);
+	calendar.setLenient(false);
 	Date dueDay = calendar.getTime();
 
 	dueDateL = new JLabel("Due Back:");
@@ -88,10 +89,6 @@ public class RentDVDDialog extends JDialog implements ActionListener {
 	setLocationRelativeTo(this);
 	setVisible(true);
 	setResizable(true);
-    }
-
-    public boolean getCloseStatus() {
-	return closeStatus;
     }
 
     @Override

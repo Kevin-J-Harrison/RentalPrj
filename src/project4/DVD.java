@@ -15,7 +15,8 @@ public class DVD implements Serializable {
     protected String title;
 
     public DVD() {
-
+	bought.setLenient(false);
+	dueBack.setLenient(false);
     }
 
     public DVD(GregorianCalendar rentalDateP, GregorianCalendar dueDateP,

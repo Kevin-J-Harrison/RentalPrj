@@ -24,7 +24,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
     private JTextField titleF;
 
     private GregorianCalendar calendar = new GregorianCalendar();
-    private final SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
 
     private JLabel rentDateL;
     private JTextField rentDateF;
@@ -34,6 +34,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 
     private JLabel consoleL;
     private JTextField consoleF;
+    private PlayerType[] consoles;
 
     private JButton OK;
     private JButton cancel;
@@ -43,8 +44,14 @@ public class RentGameDialog extends JDialog implements ActionListener {
     private Game unit;
 
     public RentGameDialog(JFrame parent, Game g) {
-	closeStatus = false;
+	consoles = new PlayerType[PlayerType.values().length];
 	int i = 0;
+	for (PlayerType p : PlayerType.values()) {
+	    consoles[i] = p;
+	    i++;
+	}
+	
+	fmt.setLenient(false);
 
 	JPanel panel = new JPanel();
 	panel.setLayout(new GridLayout(6, 2));
@@ -103,37 +110,76 @@ public class RentGameDialog extends JDialog implements ActionListener {
 	setResizable(true);
     }
 
-    public boolean getCloseStatus() {
-	return closeStatus;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 	JComponent comp = (JComponent) e.getSource();
 	if (comp == OK) {
 	    unit.setNameOfRenter(nameF.getText());
 	    unit.setTitle(titleF.getText());
-	    while (closeStatus == false) {
-		try {
-		    unit.setRentalDate(fmt.parse(rentDateF.getText()));
-		} catch (ParseException ex) {
+	    setDates();
+	    setConsole();
 
-		}
-
-		try {
-		    unit.setDueBack(fmt.parse(dueDateF.getText()));
-		} catch (ParseException ex) {
-
-		}
-	    }
-
-	    PlayerType p = PlayerType.valueOf(consoleF.getText());
-	    unit.setConsole(p);
 	    dispose();
 	}
 
 	if (comp == cancel) {
+	    unit.setNameOfRenter(null);
 	    dispose();
+	}
+    }
+
+    private void setDates() {
+	closeStatus = false;
+	boolean tryStatus = false;
+	Date rent = new Date();
+	Date due = new Date();
+
+	while (closeStatus == false) {
+	    try {
+		if (tryStatus == false) {
+		    tryStatus = true;
+		    rent = fmt.parse(rentDateF.getText());
+		    due = fmt.parse(dueDateF.getText());
+		    if (due.after(rent)) {
+			unit.setRentalDate(rent);
+			unit.setDueBack(due);
+			closeStatus = true;
+		    }
+		} else {
+		    rent = fmt.parse(JOptionPane.showInputDialog(
+			    "Incorrect Date", "Try Again"));
+		    due = fmt.parse(JOptionPane.showInputDialog(
+			    "Incorrect Date", "Try Again"));
+		    if (due.after(rent)) {
+			unit.setRentalDate(rent);
+			unit.setDueBack(due);
+			closeStatus = true;
+		    }
+		}
+
+	    } catch (ParseException e1) {
+		closeStatus = false;
+	    }
+	}
+    }
+
+    private void setConsole() {
+	closeStatus = false;
+	String console = consoleF.getText();
+	console = console.replaceAll("\\s", "");
+	System.out.println(console);
+	while (closeStatus == false) {
+	    for (PlayerType p : consoles) {
+		if (console.equalsIgnoreCase(p.name())) {
+		    PlayerType g = PlayerType.valueOf(p.name());
+		    unit.setConsole(g);
+		    closeStatus = true;
+		}
+	    }
+	    if (closeStatus == false) {
+		console = JOptionPane.showInputDialog("Console Type Incorrect",
+			"try again");
+	    }
 	}
     }
 
