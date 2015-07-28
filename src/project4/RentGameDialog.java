@@ -146,7 +146,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 					rentSet = true;
 				} else {
 					rent = fmt.parse(JOptionPane.showInputDialog(
-							"Incorrect Rental Date Format", "Try Again"));
+							"Incorrect Rental Date Format, Enter Again", "MM/DD/YYY"));
 					unit.setRentalDate(rent);
 					rentSet = true;
 				}
@@ -164,7 +164,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 					dueSet = true;
 				} else {
 					due = fmt.parse(JOptionPane.showInputDialog(
-							"Incorrect Due Date Format", "Try Again"));
+							"Incorrect Due Date Format, Enter Again", "MM/DD/YYYY"));
 					unit.setDueBack(due);
 					dueSet = true;
 				}
@@ -179,7 +179,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 					closeStatus = true;
 				} else {
 					due = fmt.parse(JOptionPane.showInputDialog(
-							"Due Date Must Be After Rental Date", "Try Again"));
+							"Due Date Must Be After " + fmt.format(rent), "MM/DD/YYYY"));
 					unit.setDueBack(due);
 				}
 			} catch (ParseException e3) {
