@@ -2,9 +2,10 @@ package project4;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+
 /**
- *  Extends the DVD class to create a Game object.
- *  
+ * Extends the DVD class to create a Game object, which extends the DVD object.
+ * 
  * @author alexvansteel, kevinharrison
  *
  */
@@ -80,14 +81,21 @@ public class Game extends DVD {
 		this.console = console;
 	}
 
+	/**
+	 * Calculates the cost after returning the Game.
+	 * 
+	 * @param dayDiff
+	 *            number of days the Game is late.
+	 * @return the cost of the rental.
+	 */
 	public double getCost(int dayDiff) {
 		double cost = 0.0;
-		
+
 		if (dayDiff <= 0)
 			return cost = 5;
-		
+
 		cost = 15;
-		
+
 		return cost;
 	}
 }
