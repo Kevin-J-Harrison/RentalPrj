@@ -282,7 +282,11 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		}
 
 		if (comp == exit) {
-			System.exit(0);
+			if (saved == true || store.getSize() == 0) {
+				System.exit(0);
+			} else {
+				JOptionPane.showMessageDialog(null, "Please Save Before Exiting", "Unsaved Progress", JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
 	}
 
