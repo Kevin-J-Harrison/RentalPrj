@@ -57,18 +57,18 @@ public class RentalStore extends AbstractListModel {
 			s += "" + d.getNameOfRenter() + " ";
 		}
 		if (d.getTitle() != null) {
-			s += "" + d.getTitle() + " ";
+			s += "   Rented: " + d.getTitle() + " ";
 		}
 		if (d.getRentalDate() != null) {
-			s += "" + fmt.format(listDVDs.get(arg0).getRentalDate().getTime())
+			s += "   Date Rented: " + fmt.format(listDVDs.get(arg0).getRentalDate().getTime())
 					+ " ";
 		}
 		if (d.getDueBack() != null) {
-			s += "" + fmt.format(d.getDueBack().getTime()) + " ";
+			s += "   Due Back: " + fmt.format(d.getDueBack().getTime()) + " ";
 		}
 
 		if (d instanceof Game) {
-			s += "" + ((Game) d).getConsole();
+			s += "   Console: " + ((Game) d).getConsole();
 		}
 
 		return s;

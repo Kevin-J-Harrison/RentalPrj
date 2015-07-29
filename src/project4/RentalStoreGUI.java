@@ -2,6 +2,7 @@ package project4;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,6 +63,8 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	/** Instance of the RentalStore. */
 	private RentalStore store;
 
+	private Boolean saved = false;
+
 	/** Format for currency. */
 	private NumberFormat numfmt = NumberFormat.getCurrencyInstance();
 
@@ -72,6 +75,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		setFrame();
 		store = new RentalStore();
 		list.setModel(store);
+		fmt.setLenient(false);
 	}
 
 	/**
@@ -137,13 +141,18 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		return scrollPane;
 	}
 
-	private JTextArea searchPane() {
-		searchPane = new JTextArea();
+	private JScrollPane searchPane() {
+		searchPane = new JTextArea(10, 1);
+		scrollPane = new JScrollPane(searchPane);
 
+		searchPane.setEditable(false);
 		searchPane.setBorder(javax.swing.BorderFactory
 				.createTitledBorder("Search Results"));
 
-		return searchPane;
+		scrollPane
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+		return scrollPane;
 	}
 
 	/**
@@ -189,7 +198,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		this.setSize(1500, 600);
+		this.setSize(1000, 600);
 		this.setResizable(true);
 	}
 
@@ -209,6 +218,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 			rent.setFrame();
 			if (unit.getNameOfRenter() != null) {
 				store.addDVD(unit);
+				saved = false;
 			}
 		}
 
@@ -218,6 +228,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 			rent.setFrame();
 			if (unit.getNameOfRenter() != null) {
 				store.addDVD(unit);
+				saved = false;
 			}
 		}
 
@@ -227,6 +238,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 			if (index != -1) {
 				DVD unit = store.getDVD(index);
 				returning(unit, index);
+				saved = false;
 			}
 		}
 
@@ -243,24 +255,29 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 				int returnVal = chooser.showSaveDialog(getParent());
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					store.save(chooser.getSelectedFile().getName());
+					saved = true;
 				}
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null,  "Save Unsuccessful", "File Not Saved", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 
 		if (comp == open) {
 			try {
-				JFileChooser chooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter(
-						"All Files", ".ser");
-				chooser.setFileFilter(filter);
-				int returnVal = chooser.showOpenDialog(getParent());
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					store.load(chooser.getSelectedFile().getName());
+				if (saved == true || store.getSize() == 0) {
+					JFileChooser chooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter(
+							"All Files", ".ser");
+					chooser.setFileFilter(filter);
+					int returnVal = chooser.showOpenDialog(getParent());
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						store.load(chooser.getSelectedFile().getName());
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Please Save Before Opening A New Serial", "Unsaved Progress", JOptionPane.INFORMATION_MESSAGE);
 				}
 			} catch (ClassNotFoundException | IOException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Incompatible File", "File Not Opened", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 
@@ -384,9 +401,10 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 						- d.getDueBack().getTimeInMillis();
 				int daysLate = (int) TimeUnit.DAYS.convert(diff,
 						TimeUnit.MILLISECONDS);
-				searchPane.append(d.getNameOfRenter() + " " + d.getTitle()
-						+ " " + fmt.format(d.getDueBack().getTime())
-						+ " Days Late: " + daysLate + "\n");
+				searchPane.append(d.getNameOfRenter() + "   Rented: "
+						+ d.getTitle() + "   Due Back: "
+						+ fmt.format(d.getDueBack().getTime())
+						+ "   Days Late: " + daysLate + "\n");
 			}
 		}
 		searchPane.repaint();
