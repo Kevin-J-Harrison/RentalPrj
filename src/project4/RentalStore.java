@@ -2,14 +2,7 @@ package project4;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.*;
 
-import javax.xml.parsers.*;
-
-import org.w3c.dom.*;
-import org.xml.sax.*;
-
-import javax.management.RuntimeErrorException;
 import javax.swing.AbstractListModel;
 
 import project4.MyDoubleLinkedList;
@@ -79,7 +72,10 @@ public class RentalStore extends AbstractListModel {
 		}
 
 		return s;
-
+	}
+	
+	public DVD getDVD(int index) {
+		return listDVDs.get(index);
 	}
 
 	/**
@@ -100,13 +96,11 @@ public class RentalStore extends AbstractListModel {
 	 * 
 	 * @param index
 	 *            unit to be deleted.
-	 * @return the unit that was deleted.
 	 */
-	public DVD deleteDVD(int index) {
+	public void deleteDVD(int index) {
 		DVD unit = listDVDs.get(index);
 		listDVDs.remove(index);
 		fireIntervalRemoved(unit, 0, listDVDs.size());
-		return unit;
 	}
 
 	/**
@@ -150,7 +144,6 @@ public class RentalStore extends AbstractListModel {
 		listDVDs = (MyDoubleLinkedList<DVD>) is.readObject();
 		is.close();
 		updateDVDs();
-
 	}
 
 	/**

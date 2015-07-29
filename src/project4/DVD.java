@@ -1,6 +1,7 @@
 package project4;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -10,7 +11,7 @@ import java.util.GregorianCalendar;
  * @author alexvansteel, kevinharrison
  *
  */
-public class DVD implements Serializable {
+public class DVD implements Serializable, Comparable<DVD> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -86,4 +87,17 @@ public class DVD implements Serializable {
 
 		return cost;
 	}
+
+	@Override
+	public int compareTo(DVD o) {
+		return Comparators.DUE_DATE.compare(this, o);
+	}
+
+	public static class Comparators {
+	    public static final Comparator<DVD> NAME = (DVD o1, DVD o2) -> o1.nameOfRenter.compareToIgnoreCase(o2.nameOfRenter);
+	    public static final Comparator<DVD> DUE_DATE = (DVD o1, DVD o2) -> o1.dueBack.getTime().compareTo(o2.dueBack.getTime());
+	    public static final Comparator<DVD> RENT_DATE = (DVD o1, DVD o2) -> o1.bought.getTime().compareTo(o2.bought.getTime());
+	    public static final Comparator<DVD> TITLE = (DVD o1, DVD o2) -> o1.title.compareToIgnoreCase(o2.title);
+	}
 }
+

@@ -1,6 +1,7 @@
 package project4;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
@@ -44,15 +45,16 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	/** Object on the menu bar for renting and returning. */
 	private JMenu action;
 	/** Objects in the action menu option. */
-	private JMenuItem rentDVDI, rentGameI, returnI;
+	private JMenuItem rentDVDI, rentGameI, returnI, searchI;
 
 	/** Creates a scroll pane for the list. */
 	private JScrollPane scrollPane;
+	private JTextArea searchPane;
 
 	/** Panel to hold the buttons as alternatives to the menu bar options. */
 	private JPanel buttonPanel;
 	/** Buttons for renting DVDs, Games, and returning. */
-	private JButton rentDVDB, rentGameB, returnB;
+	private JButton rentDVDB, rentGameB, returnB, searchB;
 
 	/** A JList of DVDs/Games. */
 	private JList<DVD> list;
@@ -67,11 +69,9 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	 * Constructor for the RentalStoreGUI
 	 */
 	public RentalStoreGUI() {
-
 		setFrame();
 		store = new RentalStore();
 		list.setModel(store);
-
 	}
 
 	/**
@@ -109,6 +109,10 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		returnI = new JMenuItem("Return");
 		returnI.addActionListener(this);
 		action.add(returnI);
+		action.addSeparator();
+		searchI = new JMenuItem("Search");
+		searchI.addActionListener(this);
+		action.add(searchI);
 
 		return menu;
 	}
@@ -133,6 +137,15 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		return scrollPane;
 	}
 
+	private JTextArea searchPane() {
+		searchPane = new JTextArea();
+
+		searchPane.setBorder(javax.swing.BorderFactory
+				.createTitledBorder("Search Results"));
+
+		return searchPane;
+	}
+
 	/**
 	 * Creates the Button Panel for the GUI.
 	 * 
@@ -140,7 +153,7 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	 */
 	private JPanel buttonPanel() {
 		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(3, 1));
+		buttonPanel.setLayout(new GridLayout(4, 1));
 
 		rentDVDB = new JButton("Rent DVD");
 		rentDVDB.addActionListener(this);
@@ -154,6 +167,10 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		returnB.addActionListener(this);
 		buttonPanel.add(returnB);
 
+		searchB = new JButton("Search");
+		searchB.addActionListener(this);
+		buttonPanel.add(searchB);
+
 		return buttonPanel;
 	}
 
@@ -166,12 +183,13 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 		this.add(scrollPane(), BorderLayout.CENTER);
 		this.add(buttonPanel(), BorderLayout.EAST);
+		this.add(searchPane(), BorderLayout.SOUTH);
 		this.setJMenuBar(menuBar());
 
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		this.setSize(1000, 400);
+		this.setSize(1500, 600);
 		this.setResizable(true);
 	}
 
@@ -207,9 +225,13 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 			int index = list.getSelectedIndex();
 
 			if (index != -1) {
-				DVD unit = store.deleteDVD(index);
-				returning(unit);
+				DVD unit = store.getDVD(index);
+				returning(unit, index);
 			}
+		}
+
+		if (comp == searchI || comp == searchB) {
+			search();
 		}
 
 		if (comp == save) {
@@ -253,43 +275,100 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	 * 
 	 * @param d
 	 *            the object being returned.
+	 * 
+	 * @param index
+	 *            the index of the object being returned
 	 */
-	private void returning(DVD d) {
+	private void returning(DVD d, int index) {
 		DVD unit = d;
 		if (unit instanceof Game) {
 			unit = (Game) unit;
 		}
 
-		Date returned = null;
+		boolean returned = false;
+		Date returnedDate = null;
 
-		while (returned == null) {
+		while (returned == false) {
 			try {
-				returned = fmt.parse(JOptionPane.showInputDialog(
-						"Enter the return date:", "MM/DD/YYYY"));
-				GregorianCalendar rday = new GregorianCalendar();
-				rday.setLenient(false);
-				rday.setTime(returned);
+				String returnedS = JOptionPane.showInputDialog(
+						"Enter the return date:", "MM/DD/YYYY");
+				if (returnedS == null) {
+					returned = true;
+					JOptionPane.showMessageDialog(null, "Return Canceled",
+							"Cancel", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					returnedDate = fmt.parse(returnedS);
+					GregorianCalendar rday = new GregorianCalendar();
+					rday.setLenient(false);
+					rday.setTime(returnedDate);
 
-				if (rday.compareTo(unit.getRentalDate()) < 0) {
-					JOptionPane.showMessageDialog(this,
-							"DATE ENTERED IS BEFORE DATE RENTED");
-					throw new IllegalArgumentException();
+					if (rday.compareTo(unit.getRentalDate()) < 0) {
+						JOptionPane.showMessageDialog(null,
+								"DATE ENTERED IS BEFORE DATE RENTED",
+								"DATE ERROR", JOptionPane.ERROR_MESSAGE);
+						throw new IllegalArgumentException();
+					} else {
+						Date dueDay = unit.getDueBack().getTime();
+						long diff = returnedDate.getTime() - dueDay.getTime();
+						int dayDiff = (int) TimeUnit.DAYS.convert(diff,
+								TimeUnit.MILLISECONDS);
+
+						JOptionPane.showMessageDialog(
+								null,
+								"Thank you " + unit.getNameOfRenter() + "!\n"
+										+ "for returning " + unit.getTitle()
+										+ ", you owe: "
+										+ numfmt.format(unit.getCost(dayDiff)));
+						store.deleteDVD(index);
+						returned = true;
+					}
 				}
 			} catch (ParseException e1) {
-				returned = null;
+
 			} catch (IllegalArgumentException ex) {
-				returned = null;
+
 			}
 		}
+	}
 
-		Date dueDay = unit.getDueBack().getTime();
-		long diff = returned.getTime() - dueDay.getTime();
-		int dayDiff = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+	private void search() {
+		searchPane.removeAll();
+		boolean dateSet = false;
+		Date searchDate = new Date();
+		GregorianCalendar c = new GregorianCalendar();
+		
+		while (dateSet == false) {
+			try {
+				String date = JOptionPane.showInputDialog(
+						"Enter A Search Date", "MM/DD/YYYY");
 
-		JOptionPane.showMessageDialog(this,
-				"Thank you " + unit.getNameOfRenter() + "!\n"
-						+ "for returning " + unit.getTitle() + ", you owe: "
-						+ numfmt.format(unit.getCost(dayDiff)));
+				if (date == null) {
+					dateSet = true;
+					JOptionPane.showMessageDialog(null, "Search Canceled",
+							"Cancel", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					searchDate = fmt.parse(date);
+					c.setTime(searchDate);
+					dateSet = true;
+				}
+			} catch (Exception e) {
+
+			}
+		}
+		
+		for(int i = 0; i < store.getSize(); i++) {
+			DVD d = store.getDVD(i);
+			if(d.getDueBack().compareTo(c) < 0) {
+				int daysLate = c.compareTo(d.getDueBack());
+				searchPane.append(
+						d.getNameOfRenter() + " " 
+						+ d.getTitle() + " " 
+						+ fmt.format(d.getDueBack().getTime()) 
+						+ " Days Late: " 
+						+ daysLate + "\n");
+			}
+		}
+		searchPane.repaint();
 	}
 
 	/**

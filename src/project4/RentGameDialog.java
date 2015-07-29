@@ -59,10 +59,15 @@ public class RentGameDialog extends JDialog implements ActionListener {
 	private JButton OK;
 	/** Button used to cancel the dialog box. */
 	private JButton cancel;
+	
+	private Date rent;
+	private Date due;
 
 	/** Checks to see if the dialog box was used to enter data. */
-	private boolean closeStatus;
-
+	private boolean closeStatus = false;
+	private boolean rentSet = false;
+	private boolean dueSet = false;
+	private boolean tryStatus = false;
 	/** Pointer for the newly created Game object. */
 	private Game unit;
 
@@ -79,6 +84,9 @@ public class RentGameDialog extends JDialog implements ActionListener {
 			consoles[i] = p;
 			i++;
 		}
+		
+		rent = new Date();
+		due = new Date();
 
 		fmt.setLenient(false);
 
@@ -172,26 +180,33 @@ public class RentGameDialog extends JDialog implements ActionListener {
  * Sets the dates for the day the Game is rented and due.
  */
 	private void setDates() {
-		closeStatus = false;
-		boolean tryStatus = false;
-		boolean rentSet = false;
-		boolean dueSet = false;
-
-		Date rent = new Date();
-		Date due = new Date();
-
+		setRentalDate();
+		setDueDate();
+		checkDueDate();
+	}
+	
+	private void setRentalDate() {
 		while (rentSet == false) {
 			try {
-				if (tryStatus = false) {
+				if (tryStatus == false) {
 					tryStatus = true;
 					rent = fmt.parse(rentDateF.getText());
 					unit.setRentalDate(rent);
 					rentSet = true;
 				} else {
-					rent = fmt.parse(JOptionPane.showInputDialog(
-							"Incorrect Rental Date Format, Enter Again", "MM/DD/YYY"));
-					unit.setRentalDate(rent);
-					rentSet = true;
+					String rentDate = JOptionPane.showInputDialog(
+							"Incorrect Rental Date Format, Enter Again",
+							"MM/DD/YYY");
+					if (rentDate == null) {
+						rentSet = true;
+						dueSet = true;
+						closeStatus = true;
+						unit.setNameOfRenter(null);
+					} else {
+						rent = fmt.parse(rentDate);
+						unit.setRentalDate(rent);
+						rentSet = true;
+					}
 				}
 			} catch (ParseException e1) {
 
@@ -199,33 +214,56 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		}
 
 		tryStatus = false;
+	}
+	
+	private void setDueDate() {
 		while (dueSet == false) {
 			try {
 				if (tryStatus == false) {
+					tryStatus = true;
 					due = fmt.parse(dueDateF.getText());
 					unit.setDueBack(due);
 					dueSet = true;
 				} else {
-					due = fmt.parse(JOptionPane.showInputDialog(
-							"Incorrect Due Date Format, Enter Again", "MM/DD/YYYY"));
-					unit.setDueBack(due);
-					dueSet = true;
+					String dueDate = JOptionPane.showInputDialog(
+							"Incorrect Due Date Format, Enter Again",
+							"MM/DD/YYYY");
+					if (dueDate == null) {
+						dueSet = true;
+						closeStatus = true;
+						unit.setNameOfRenter(null);
+					} else {
+						due = fmt.parse(dueDate);
+						unit.setDueBack(due);
+						dueSet = true;
+					}
 				}
 			} catch (ParseException e2) {
-				
+
 			}
 		}
-
+	}
+	
+	private void checkDueDate() {
 		while (closeStatus == false) {
 			try {
-				if(due.after(rent)) {
+				if (due.after(rent)) {
 					closeStatus = true;
 				} else {
-					due = fmt.parse(JOptionPane.showInputDialog(
-							"Due Date Must Be After " + fmt.format(rent), "MM/DD/YYYY"));
-					unit.setDueBack(due);
+					String dueDate = JOptionPane.showInputDialog(
+							"Due Date Must Be After " + fmt.format(rent),
+							"MM/DD/YYYY");
+					if (dueDate == null) {
+						closeStatus = true;
+						unit.setNameOfRenter(null);
+					} else {
+						due = fmt.parse(dueDate);
+						unit.setDueBack(due);
+						closeStatus = true;
+					}
 				}
 			} catch (ParseException e3) {
+
 			}
 		}
 	}
