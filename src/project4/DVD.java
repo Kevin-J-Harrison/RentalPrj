@@ -94,10 +94,13 @@ public class DVD implements Serializable, Comparable<DVD> {
 	}
 
 	public static class Comparators {
-	    public static final Comparator<DVD> NAME = (DVD o1, DVD o2) -> o1.nameOfRenter.compareToIgnoreCase(o2.nameOfRenter);
-	    public static final Comparator<DVD> DUE_DATE = (DVD o1, DVD o2) -> o1.dueBack.getTime().compareTo(o2.dueBack.getTime());
-	    public static final Comparator<DVD> RENT_DATE = (DVD o1, DVD o2) -> o1.bought.getTime().compareTo(o2.bought.getTime());
-	    public static final Comparator<DVD> TITLE = (DVD o1, DVD o2) -> o1.title.compareToIgnoreCase(o2.title);
+		public static final Comparator<DVD> NAME = (DVD o1, DVD o2) -> o1.nameOfRenter
+				.compareToIgnoreCase(o2.nameOfRenter);
+		public static final Comparator<DVD> DUE_DATE = (DVD o1, DVD o2) -> o1.dueBack
+				.getTime().compareTo(o2.dueBack.getTime());
+		public static final Comparator<DVD> RENT_DATE = (DVD o1, DVD o2) -> o1.bought
+				.getTime().compareTo(o2.bought.getTime());
+		public static final Comparator<DVD> TITLE = (DVD o1, DVD o2) -> o1.title
+				.compareToIgnoreCase(o2.title);
 	}
 }
-

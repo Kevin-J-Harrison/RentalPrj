@@ -49,7 +49,7 @@ public class RentDVDDialog extends JDialog implements ActionListener {
 	private JButton OK;
 	/** Button used to cancel the dialog box. */
 	private JButton cancel;
-	
+
 	private Date rent;
 	private Date due;
 
@@ -149,12 +149,20 @@ public class RentDVDDialog extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Sets the rental and due back dates, and then checks to make sure they are
+	 * valid.
+	 */
 	private void setDates() {
 		setRentalDate();
 		setDueDate();
 		checkDueDate();
 	}
-	
+
+	/**
+	 * Checks to make sure the rental date is a valid date, and then sets the
+	 * rental date.
+	 */
 	private void setRentalDate() {
 		while (rentSet == false) {
 			try {
@@ -185,7 +193,11 @@ public class RentDVDDialog extends JDialog implements ActionListener {
 
 		tryStatus = false;
 	}
-	
+
+	/**
+	 * Checks to make sure the due date is a valid date, and then sets the due
+	 * date.
+	 */
 	private void setDueDate() {
 		while (dueSet == false) {
 			try {
@@ -213,7 +225,10 @@ public class RentDVDDialog extends JDialog implements ActionListener {
 			}
 		}
 	}
-	
+
+	/**
+	 * Checks the due date to make sure it is after the rental date.
+	 */
 	private void checkDueDate() {
 		while (closeStatus == false) {
 			try {

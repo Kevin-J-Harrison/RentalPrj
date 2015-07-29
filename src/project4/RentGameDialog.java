@@ -59,7 +59,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 	private JButton OK;
 	/** Button used to cancel the dialog box. */
 	private JButton cancel;
-	
+
 	private Date rent;
 	private Date due;
 
@@ -84,7 +84,7 @@ public class RentGameDialog extends JDialog implements ActionListener {
 			consoles[i] = p;
 			i++;
 		}
-		
+
 		rent = new Date();
 		due = new Date();
 
@@ -122,7 +122,6 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		dueDateF = new JTextField(fmt.format(dueDay));
 		panel.add(dueDateF);
 
-
 		consoleL = new JLabel("Console Type:");
 		panel.add(consoleL);
 		consoleF = new JTextField("GameCube");
@@ -140,7 +139,6 @@ public class RentGameDialog extends JDialog implements ActionListener {
 
 	}
 
-
 	/**
 	 * Sets the parameters for the Dialog Box frame.
 	 */
@@ -151,8 +149,6 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		setVisible(true);
 		setResizable(true);
 	}
-
-
 
 	/**
 	 * Action Listener and events for using the frame.
@@ -175,16 +171,18 @@ public class RentGameDialog extends JDialog implements ActionListener {
 		}
 	}
 
-
-/**
- * Sets the dates for the day the Game is rented and due.
- */
+	/**
+	 * Sets the dates for the day the Game is rented and due.
+	 */
 	private void setDates() {
 		setRentalDate();
 		setDueDate();
 		checkDueDate();
 	}
-	
+
+	/**
+	 * Sets the rental date and makes sure it is in the correct date format.
+	 */
 	private void setRentalDate() {
 		while (rentSet == false) {
 			try {
@@ -215,7 +213,10 @@ public class RentGameDialog extends JDialog implements ActionListener {
 
 		tryStatus = false;
 	}
-	
+
+	/**
+	 * Sets the due date and makes sure it is in the correct date format.
+	 */
 	private void setDueDate() {
 		while (dueSet == false) {
 			try {
@@ -243,7 +244,10 @@ public class RentGameDialog extends JDialog implements ActionListener {
 			}
 		}
 	}
-	
+
+	/**
+	 * Checks the due date and makes sure it is after the rental date.
+	 */
 	private void checkDueDate() {
 		while (closeStatus == false) {
 			try {
@@ -267,7 +271,6 @@ public class RentGameDialog extends JDialog implements ActionListener {
 			}
 		}
 	}
-
 
 	/**
 	 * Checks to see if the console is of a valid console type, and sets the

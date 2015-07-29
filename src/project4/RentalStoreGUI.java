@@ -331,10 +331,14 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Creates a panel to hold strings of DVDs/Games that are due back before
+	 * the entered date. Shows the number of days late the DVD/Game is.
+	 */
 	private void search() {
 		searchPane.removeAll();
-		searchPane.repaint();
 		searchPane.setText("");
+		searchPane.repaint();
 		boolean dateSet = false;
 		boolean tryStatus = false;
 		Date searchDate = new Date();
