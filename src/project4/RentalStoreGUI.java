@@ -334,23 +334,39 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 	private void search() {
 		searchPane.removeAll();
 		searchPane.repaint();
+		searchPane.setText("");
 		boolean dateSet = false;
+		boolean tryStatus = false;
 		Date searchDate = new Date();
 		GregorianCalendar c = new GregorianCalendar();
 
 		while (dateSet == false) {
 			try {
-				String date = JOptionPane.showInputDialog(
-						"Enter A Search Date", "MM/DD/YYYY");
-
-				if (date == null) {
-					dateSet = true;
-					JOptionPane.showMessageDialog(null, "Search Canceled",
-							"Cancel", JOptionPane.INFORMATION_MESSAGE);
+				if (tryStatus = false) {
+					tryStatus = true;
+					String date = JOptionPane.showInputDialog(
+							"Enter A Search Date", "MM/DD/YYYY");
+					if (date == null) {
+						dateSet = true;
+						JOptionPane.showMessageDialog(null, "Search Canceled",
+								"Cancel", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						searchDate = fmt.parse(date);
+						c.setTime(searchDate);
+						dateSet = true;
+					}
 				} else {
-					searchDate = fmt.parse(date);
-					c.setTime(searchDate);
-					dateSet = true;
+					String date = JOptionPane.showInputDialog(
+							"Improper Date Format, Try Again", "MM/DD/YYYY");
+					if (date == null) {
+						dateSet = true;
+						JOptionPane.showMessageDialog(null, "Search Canceled",
+								"Cancel", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						searchDate = fmt.parse(date);
+						c.setTime(searchDate);
+						dateSet = true;
+					}
 				}
 			} catch (Exception e) {
 
@@ -360,7 +376,8 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 		for (int i = 0; i < store.getSize(); i++) {
 			DVD d = store.getDVD(i);
 			if (d.getDueBack().compareTo(c) < 0) {
-				long diff = c.getTimeInMillis() - d.getDueBack().getTimeInMillis();
+				long diff = c.getTimeInMillis()
+						- d.getDueBack().getTimeInMillis();
 				int daysLate = (int) TimeUnit.DAYS.convert(diff,
 						TimeUnit.MILLISECONDS);
 				searchPane.append(d.getNameOfRenter() + " " + d.getTitle()
