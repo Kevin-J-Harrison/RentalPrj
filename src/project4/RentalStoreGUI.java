@@ -333,10 +333,11 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 	private void search() {
 		searchPane.removeAll();
+		searchPane.repaint();
 		boolean dateSet = false;
 		Date searchDate = new Date();
 		GregorianCalendar c = new GregorianCalendar();
-		
+
 		while (dateSet == false) {
 			try {
 				String date = JOptionPane.showInputDialog(
@@ -355,17 +356,16 @@ public class RentalStoreGUI extends JFrame implements ActionListener {
 
 			}
 		}
-		
-		for(int i = 0; i < store.getSize(); i++) {
+
+		for (int i = 0; i < store.getSize(); i++) {
 			DVD d = store.getDVD(i);
-			if(d.getDueBack().compareTo(c) < 0) {
-				int daysLate = c.compareTo(d.getDueBack());
-				searchPane.append(
-						d.getNameOfRenter() + " " 
-						+ d.getTitle() + " " 
-						+ fmt.format(d.getDueBack().getTime()) 
-						+ " Days Late: " 
-						+ daysLate + "\n");
+			if (d.getDueBack().compareTo(c) < 0) {
+				long diff = c.getTimeInMillis() - d.getDueBack().getTimeInMillis();
+				int daysLate = (int) TimeUnit.DAYS.convert(diff,
+						TimeUnit.MILLISECONDS);
+				searchPane.append(d.getNameOfRenter() + " " + d.getTitle()
+						+ " " + fmt.format(d.getDueBack().getTime())
+						+ " Days Late: " + daysLate + "\n");
 			}
 		}
 		searchPane.repaint();
